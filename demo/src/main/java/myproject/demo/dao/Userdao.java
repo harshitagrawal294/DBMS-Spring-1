@@ -2,7 +2,7 @@ package myproject.demo.dao;
 
 import javax.transaction.Transactional;
 
-import myproject.demo.models.Customer;
+// import myproject.demo.models.Customer;
 import myproject.demo.models.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
