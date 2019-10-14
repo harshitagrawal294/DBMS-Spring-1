@@ -548,6 +548,36 @@ LOCK TABLES `Wallet` WRITE;
 INSERT INTO `Wallet` VALUES (2,105.05,2);
 /*!40000 ALTER TABLE `Wallet` ENABLE KEYS */;
 UNLOCK TABLES;
+
+--
+-- Table structure for table `transaction`
+--
+
+DROP TABLE IF EXISTS `transaction`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `transaction` (
+  `transactionid` int(11) NOT NULL,
+  `money` float NOT NULL,
+  `status` int(11) DEFAULT NULL,
+  `User_Id` int(11) DEFAULT NULL,
+  `Customer_Id` int(11) NOT NULL,
+  PRIMARY KEY (`transactionid`),
+  KEY `Customer_Id` (`Customer_Id`),
+  KEY `User_Id` (`User_Id`),
+  CONSTRAINT `transaction_ibfk_1` FOREIGN KEY (`Customer_Id`) REFERENCES `Customer` (`Customer_Id`) ON DELETE CASCADE,
+  CONSTRAINT `transaction_ibfk_2` FOREIGN KEY (`User_Id`) REFERENCES `Employee` (`User_Id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `transaction`
+--
+
+LOCK TABLES `transaction` WRITE;
+/*!40000 ALTER TABLE `transaction` DISABLE KEYS */;
+/*!40000 ALTER TABLE `transaction` ENABLE KEYS */;
+UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -558,4 +588,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2019-10-15  1:56:35
+-- Dump completed on 2019-10-15  2:08:24
