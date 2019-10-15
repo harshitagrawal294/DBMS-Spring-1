@@ -26,7 +26,7 @@ JdbcTemplate template;
 //     this.template = template;  
 // }  
 public int save(Customer_Policy p){  
-    String sql="insert into Customer_Policies(Date_of_Purchase,date_of_expire,Policy_id,User_Id,Customer_Id) values('"+p.getDate_of_Purchase()+"','"+p.getDateOfExpire()+"',"+p.getPolicy_Id()+","+p.getUser_Id()+","+p.getCustomer_Id()+")";  
+    String sql="insert into Customer_Policies(Date_of_Purchase,date_of_expire,Policy_id,Customer_Id) values('"+p.getDate_of_Purchase()+"','"+p.getDateOfExpire()+"',"+p.getPolicy_Id()+","+p.getCustomer_Id()+")";  
     // System.out.print(sql);
     return template.update(sql);  
 }  
@@ -50,7 +50,7 @@ public List<Customer_Policy> getPolicy(){
             e.setDate_of_Purchase(rs.getString(2));  
             e.setDateOfExpire(rs.getString(3));
             e.setPolicy_Id(rs.getInt(4));
-            e.setUser_Id(rs.getInt(5));
+            // e.setUser_Id(rs.getInt(5));
             e.setCustomer_Id(rs.getInt(6));
             return e;  
         }  
@@ -64,7 +64,7 @@ public List<Customer_Policy> getpolicybycustomer(int id){
             e.setDate_of_Purchase(rs.getString(2));  
             e.setDateOfExpire(rs.getString(3));
             e.setPolicy_Id(rs.getInt(4));
-            e.setUser_Id(rs.getInt(5));
+            // e.setUser_Id(rs.getInt(5));
             e.setCustomer_Id(rs.getInt(6));
             return e;  
         }  

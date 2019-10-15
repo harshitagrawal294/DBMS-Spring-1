@@ -20,7 +20,8 @@ public class Customer_Policy {
 	private String date_of_Purchase;
 
 	private int Policy_Id;
-	private int User_Id;
+	private int Asset_Id;
+	
 
 	public Customer_Policy() {
 	}
@@ -58,10 +59,10 @@ public class Customer_Policy {
 	public void setPolicy_Id(int Policy_Id) {
 		this.Policy_Id = Policy_Id;
 	}
-	public int getUser_Id() {
-		return this.User_Id;
+	public int getAsset_Id() {
+		return this.Asset_Id;
 	}
-	public void setUser_Id(int User_Id) {
-		this.User_Id = User_Id;
+	public void setAsset_Id(int Asset_Id) {
+		this.Asset_Id = Asset_Id;
 	}
 }

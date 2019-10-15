@@ -32,6 +32,7 @@ import myproject.demo.dao.CustomerDao;
 import myproject.demo.dao.CustomerEmailDao;
 import myproject.demo.dao.Customer_PoliciesDao;
 import myproject.demo.dao.DocumentDao;
+import myproject.demo.dao.DocumentofDao;
 import myproject.demo.dao.PolicyDao;
 import myproject.demo.dao.Userdao;
 import myproject.demo.dao.WalletDao;
@@ -42,6 +43,7 @@ import myproject.demo.models.Customer_Contact;
 import myproject.demo.models.Customer_Email_Id;
 import myproject.demo.models.Customer_Policy;
 import myproject.demo.models.Document;
+import myproject.demo.models.Documentof;
 import myproject.demo.models.Policy;
 import myproject.demo.models.User;
 import myproject.demo.models.Wallet;
@@ -70,6 +72,8 @@ public class CustomerUserController {
     PolicyDao PolicyDao;
     @Autowired
     JdbcTemplate template;
+    @Autowired
+    DocumentofDao DocumentofDao;
 
     // add customer information,
       
@@ -165,7 +169,7 @@ public class CustomerUserController {
         Customer c=dao.getCustomerByusername(principle.getName());
         int id=c.getCustomer_Id();
         dao2.delete(id,contact);  
-        return "redirect:/customer/showcontact/";  
+        return "redirect:/customer/showcontact";  
     } 
     @RequestMapping("/addcontact")  
     public String addcontact(Model m,Principal principal){  
@@ -179,7 +183,7 @@ public class CustomerUserController {
     @RequestMapping(value="/savecontact",method = RequestMethod.POST)  
     public String save(@ModelAttribute("cust") Customer_Contact cust){ 
         dao2.save(cust);  
-        return "redirect:/customer/showcontact/";//will redirect to viewemp request mapping  
+        return "redirect:/customer/showcontact";//will redirect to viewemp request mapping  
     }   
     //////////////////////////////////////////////
     @RequestMapping("/showemails")  
@@ -195,7 +199,7 @@ public class CustomerUserController {
         Customer c=dao.getCustomerByusername(principle.getName());
         int id=c.getCustomer_Id();
         dao3.delete(id,contact);  
-        return "redirect:/customer/showemails/";  
+        return "redirect:/customer/showemails";  
     } 
     @RequestMapping("/addemails")  
     public String addemails(Model m,Principal principal){  
@@ -209,7 +213,7 @@ public class CustomerUserController {
     @RequestMapping(value="/saveemails",method = RequestMethod.POST)  
     public String saveemails(@ModelAttribute("cust") Customer_Email_Id cust){ 
         dao3.save(cust);  
-        return "redirect:/customer/showemails/";//will redirect to viewemp request mapping  
+        return "redirect:/customer/showemails";//will redirect to viewemp request mapping  
     } 
     @RequestMapping("/addbalance")  
     public String addbalance(Model m,Principal principal){  
@@ -223,7 +227,7 @@ public class CustomerUserController {
     @RequestMapping(value="/updatebalance",method = RequestMethod.POST)  
     public String save(@ModelAttribute("p") Wallet p){ 
         dao4.update(p);  
-        return "redirect:/customer/myinfo/";//will redirect to viewemp request mapping  
+        return "redirect:/customer/myinfo";//will redirect to viewemp request mapping  
     }  
     //////////////////////
     ////view policy///////
@@ -363,6 +367,69 @@ public class CustomerUserController {
         m.addAttribute("companymap", companymap); 
         m.addAttribute("list", list); 
         return "showmyclaims"; 
+    }
+    @RequestMapping("mypolicies")
+    public String mypolicies(Model m,Principal principal)
+    {
+        final Map<Integer,String> assetmap=new HashMap<Integer,String>();
+        final Map<Integer,String> policymap=new HashMap<Integer,String>();
+        final Map<Integer,String> companymap=new HashMap<Integer,String>();
+        int id=(dao.getCustomerByusername(principal.getName())).getCustomer_Id();
+    	List<Customer_Policy> list=template.query("select Policy_Number,Date_of_Purchase,date_of_expire,cp.Policy_id,cp.Customer_Id,cp.Asset_Id,Details,p.Name_of_Policy,p.Company_Id,cmp.Name as cmpname from Customer_Policies as cp,Assets as a,Policy as p,Company as cmp where cp.Customer_Id="+id+" and cp.Asset_Id=a.Asset_Id and cp.Policy_id=p.Policy_id and p.Company_Id= cmp.Company_Id and date_of_expire>=curdate()",new ResultSetExtractor<List<Customer_Policy> >(){  
+	        public List<Customer_Policy> extractData(ResultSet rs) throws SQLException,DataAccessException {  
+	        	List<Customer_Policy> list = new ArrayList<Customer_Policy>();  
+	            while(rs.next()){  
+                    Customer_Policy bt = new Customer_Policy();
+	               bt.setPolicy_Number(rs.getInt("Policy_Number"));
+	               bt.setDate_of_Purchase(rs.getString("Date_of_Purchase"));
+	               bt.setDateOfExpire(rs.getString("date_of_expire"));
+	               bt.setPolicy_Id(rs.getInt("Policy_id"));
+                   bt.setAsset_Id(rs.getInt("Asset_Id"));
+                   bt.setCustomer_Id(rs.getInt("Customer_Id"));
+                      assetmap.put(rs.getInt("Policy_Number"),rs.getString("Details"));
+                      policymap.put(rs.getInt("Policy_Number"),rs.getString("Name_of_Policy"));
+                      companymap.put(rs.getInt("Policy_Number"),rs.getString("Name"));
+	               list.add(bt);  
+	            }  
+	            return list;
+	        }  
+        });  
+        m.addAttribute("assetmap", assetmap);
+        m.addAttribute("policymap", policymap);
+        m.addAttribute("companymap", companymap); 
+        m.addAttribute("list", list); 
+        return "showmypolicies"; 
+    }
+    @RequestMapping(value="/linkdocs/{pid}",method = RequestMethod.GET)
+    public String linkdocs(Principal principal,@PathVariable int pid,Model m)
+    {
+        int id=(dao.getCustomerByusername(principal.getName())).getCustomer_Id();
+        Documentof d=new Documentof();
+        d.setCustomerid(id);
+        d.setPolicynumber(pid);
+        List<Document> list=template.query("select Document_Id,Document_Type,Verification_Status,Link_to_doc,Customer_Id from Documents as d where d.Customer_Id="+id+" and Verification_Status=1 and (d.Document_Id,"+pid+") not in(select Document_Id,Policy_Number from Documentof)",new ResultSetExtractor<List<Document> >(){  
+	        public List<Document> extractData(ResultSet rs) throws SQLException,DataAccessException {  
+	        	List<Document> list = new ArrayList<Document>();  
+	            while(rs.next()){  
+                    Document bt = new Document();
+	               bt.setDocument_Id(rs.getInt("Document_Id"));
+	               bt.setDocument_Type(rs.getString("Document_Type"));
+	               bt.setVerification_Status(rs.getInt("Verification_Status"));
+	               bt.setLink_to_doc(rs.getString("Link_to_doc"));
+                   bt.setCustomer_Id(rs.getInt("Customer_Id"));
+	               list.add(bt);  
+	            }  
+	            return list;
+	        }  
+        });  
+        m.addAttribute("list", list);
+        m.addAttribute("command", d);
+        return "choosedocforpolicy";
+    }
+    @RequestMapping(value="/linkdocsave",method = RequestMethod.POST)  
+    public String linkdocsave(@ModelAttribute("p") Documentof p){ 
+        DocumentofDao.save(p);  
+        return "redirect:/customer/mypolicies";//will redirect to viewemp request mapping  
     }
 
 }  
