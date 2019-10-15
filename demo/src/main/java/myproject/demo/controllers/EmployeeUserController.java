@@ -45,6 +45,7 @@ import myproject.demo.dao.Employee_typeDao;
 import myproject.demo.dao.FeedbackDao;
 import myproject.demo.dao.OfficeDao;
 import myproject.demo.dao.PolicyDao;
+import myproject.demo.dao.TransactionDao;
 import myproject.demo.dao.Userdao;
 import myproject.demo.dao.WalletDao;
 // import myproject.demo.models.Asset;
@@ -64,6 +65,7 @@ import myproject.demo.models.Document;
 import myproject.demo.models.Employee;
 import myproject.demo.models.Feedback;
 import myproject.demo.models.Policy;
+import myproject.demo.models.Transaction;
 import myproject.demo.models.Wallet;
 
 
@@ -100,6 +102,8 @@ public class EmployeeUserController {
     PolicyDao PolicyDao;
     @Autowired
     FeedbackDao FeedbackDao; 
+    @Autowired 
+    TransactionDao TransactionDao;
     
     // add customer information,
       
@@ -328,6 +332,44 @@ public class EmployeeUserController {
         FeedbackDao.update(cust);
         return "redirect:/employee/feedback";//will redirect to viewemp request mapping  
     }
+    @RequestMapping("viewtransactions")
+    public String viewtransactions(Model m)
+    {
+        final Map<Integer,String> map=new HashMap<Integer,String>();
+    	List<Transaction> list=template.query("select money,status,t.Customer_Id,transactionid,Name from transaction as t,Customer as c where t.status=0 and t.Customer_Id=c.Customer_Id",new ResultSetExtractor<List<Transaction> >(){  
+	        public List<Transaction> extractData(ResultSet rs) throws SQLException,DataAccessException {  
+	        	List<Transaction> list = new ArrayList<Transaction>();  
+	            while(rs.next()){  
+                    Transaction bt = new Transaction();
+	               bt.setMoney(rs.getFloat("money"));
+	               bt.setStatus(rs.getInt("status"));
+                   bt.setCustomer_Id(rs.getInt("Customer_Id"));
+                   bt.setTransactionid(rs.getInt("transactionid"));
+	               map.put(rs.getInt("transactionid"),rs.getString("Name"));
+	               list.add(bt);  
+	            }  
+	            return list;
+	        }  
+        });  
+       
+        m.addAttribute("list",list);
+        m.addAttribute("map", map);
+        // m.addAttribute("e", e);
+        return "pendingtransaction";
+    }
+    @RequestMapping(value="/changetstatus/{id}",method = RequestMethod.GET)  
+    public String changetstatus(@PathVariable int id,Principal principal){
+        int eid=(EmployeeDao.getemployeeByusername(principal.getName())).getUser_Id();
+        TransactionDao.savebyemployee(id, eid);
+        int money=TransactionDao.getmoney(id);
+        int cid=TransactionDao.getcustomer(id);
+        Wallet w=new Wallet();
+        w.setBalance(money);
+        w.setCustomer_Id(cid);
+        WalletDao.update(w);
+        return "redirect:/employee/viewtransactions";
+        
+    }  
 }  
    
 

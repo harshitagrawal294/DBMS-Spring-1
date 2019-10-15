@@ -31,6 +31,7 @@ import myproject.demo.dao.Customer_PoliciesDao;
 import myproject.demo.dao.DocumentDao;
 import myproject.demo.dao.DocumentofDao;
 import myproject.demo.dao.PolicyDao;
+import myproject.demo.dao.TransactionDao;
 import myproject.demo.dao.Userdao;
 import myproject.demo.dao.WalletDao;
 import myproject.demo.models.Asset;
@@ -42,6 +43,7 @@ import myproject.demo.models.Customer_Policy;
 import myproject.demo.models.Document;
 import myproject.demo.models.Documentof;
 import myproject.demo.models.Policy;
+import myproject.demo.models.Transaction;
 import myproject.demo.models.User;
 import myproject.demo.models.Wallet;
 
@@ -71,6 +73,8 @@ public class CustomerUserController {
     JdbcTemplate template;
     @Autowired
     DocumentofDao DocumentofDao;
+    @Autowired
+    TransactionDao TransactionDao;
 
     // add customer information,
       
@@ -223,7 +227,11 @@ public class CustomerUserController {
     }    
     @RequestMapping(value="/updatebalance",method = RequestMethod.POST)  
     public String save(@ModelAttribute("p") Wallet p){ 
-        dao4.update(p);  
+        Transaction t=new Transaction();
+        t.setCustomer_Id(p.getCustomer_Id());
+        t.setMoney(p.getBalance());
+        t.setStatus(0);
+        TransactionDao.savebycustomer(t);
         return "redirect:/customer/myinfo";//will redirect to viewemp request mapping  
     }  
     //////////////////////

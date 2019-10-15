@@ -11,7 +11,7 @@ public class Transaction {
     // private static final long serialVersionUID = 1L;
 
     private int transactionid;
-    private int money;
+    private float money;
     private int status;
 
     
@@ -26,11 +26,11 @@ public class Transaction {
         this.transactionid = transactionid;
     }
 
-    public int getMoney() {
+    public float getMoney() {
         return this.money;
     }
 
-    public void setMoney(int money) {
+    public void setMoney(float money) {
         this.money = money;
     }
 

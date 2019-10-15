@@ -12,6 +12,7 @@
     <a href="/employee/feedback">View Forum Post</a><br>
     <a href="/employee/policies/vehicle">All Policies</a><br>
     <a href="/employee/addbalance">Add wallet money</a><br>
+    <a href="/employee/viewtransactions">View transactions</a><br>
     <a href="/logout">Logout</a>
 </body>
 </html>
