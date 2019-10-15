@@ -21,10 +21,7 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
 
 import myproject.demo.dao.AssetDao;
 import myproject.demo.dao.CustomerContactsDao;
@@ -319,21 +316,6 @@ public class CustomerUserController {
     // }  
 
 
-
-
-    ///////////////////////
-    ///assets/////////////
-
-    @RequestMapping("/myassets")  
-    public String myassets(Model m,Principal principal){  
-        // Customer_Contact c=new Customer_Contact();
-        Customer c1=dao.getCustomerByusername(principal.getName());
-        int id=c1.getCustomer_Id();
-        List<Asset> list=assetdao.getassetsbycustomer(id);
-        // m.addAttribute("command", c);
-        m.addAttribute("list", list);
-        return "myassets";  
-    }  
     ///////////////////////////////
     ///my claims///////////////////
     @RequestMapping("/myclaims")
@@ -432,4 +414,34 @@ public class CustomerUserController {
         return "redirect:/customer/mypolicies";//will redirect to viewemp request mapping  
     }
 
-}  
+    ////////////////////////////////////////// Asset Section ///////////////////////////////////////////////////////////
+
+    @RequestMapping("/assets")
+    public String myAssets(Model m, Principal p){
+        Customer c= dao.getCustomerByusername(p.getName());
+        m.addAttribute("secured_assets", assetdao.getSecuredAssetByCustomer(c.getCustomer_Id()));
+        m.addAttribute("unsecured_assets", assetdao.getUnsecuredAssetByCustomer(c.getCustomer_Id()));
+        return "myAssets";
+    }
+
+    @GetMapping("/asset/add")
+    public String addAsset(Model m, Principal p){
+        m.addAttribute("command", new Asset());
+        return "addAsset";
+    }
+
+    @PostMapping("/asset/add")
+    public String addAsset(@ModelAttribute("asset") Asset a, Principal p){
+        a.setCustomerid(dao.getCustomerByusername(p.getName()).getCustomer_Id());
+        assetdao.save(a);
+        return "redirect:/customer/assets";
+    }
+
+    @RequestMapping("/self/asset/{asset_id}/delete")
+    public String deleteAsset(@PathVariable int asset_id, Principal p){
+        assetdao.delete(asset_id);
+        return "redirect:/customer/assets";
+    }
+
+    ////////////////////////////////////////// ///////////// ///////////////////////////////////////////////////////////
+}
