@@ -32,13 +32,12 @@ JdbcTemplate template;
   
  
 public int save(Asset p) {
-    String sql="insert into Assets(details,Policy_Number,Customer_Id,type) values('"+p.getDetails()+"',"+p.getPolicynumber()+","+p.getCustomerid()+",'"+p.getType()+"')";  
-    // System.out.print(sql);
-    return template.update(sql);  
+    String sql="insert into Assets(details,Customer_Id,type) values(?,?,?)";
+    return template.update(sql, p.getDetails(),p.getCustomerid(),p.getType());
 }  
 
 public int delete(int c){  
-    String sql="delete from Assets where Asset_Id="+c+"";  
+    String sql="delete from Assets where Asset_Id="+c;
     return template.update(sql);  
 }  
 
@@ -72,6 +71,36 @@ public List<Asset> getassetsbycustomer(int id){
     });  
 } 
 
+public List<Asset> getSecuredAssetByCustomer(int c_id){
+    String query = "select * from Assets as a where a.Asset_Id in " +
+            "( select Asset_Id from Customer_Policies where date_of_expire >= CURDATE() and Customer_Id=?)";
+    return template.query(query, new Object[]{c_id}, new RowMapper<Asset>() {
+        @Override
+        public Asset mapRow(ResultSet rs, int i) throws SQLException {
+            Asset e=new Asset();
+            e.setAssetid(rs.getInt(1));
+            e.setDetails(rs.getString(2));
+            e.setType(rs.getString(3));
+            return e;
+        }
+    });
+}
+
+public List<Asset> getUnsecuredAssetByCustomer(int c_id){
+    String query = "select * from Assets as a where a.Asset_Id in " +
+            "( select Asset_Id from Assets except " +
+            "select Asset_Id from Customer_Policies where date_of_expire >= CURDATE() and Customer_Id=?)";
+    return template.query(query, new Object[]{c_id}, new RowMapper<Asset>() {
+        @Override
+        public Asset mapRow(ResultSet rs, int i) throws SQLException {
+            Asset e=new Asset();
+            e.setAssetid(rs.getInt(1));
+            e.setDetails(rs.getString(2));
+            e.setType(rs.getString(3));
+            return e;
+        }
+    });
+}
 
 
 }  
