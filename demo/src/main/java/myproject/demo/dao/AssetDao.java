@@ -102,5 +102,9 @@ public List<Asset> getUnsecuredAssetByCustomer(int c_id){
     });
 }
 
+public String getTypeById(int asset_id){
+    String query = "select type from Assets where Asset_Id="+asset_id;
+    return template.queryForObject(query, String.class);
+}
 
 }  

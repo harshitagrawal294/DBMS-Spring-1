@@ -64,7 +64,7 @@ public class CustomerUserController {
     @Autowired
     Userdao userdao;
     @Autowired 
-    Customer_PoliciesDao dao6;
+    Customer_PoliciesDao cPolicyDao;
     @Autowired
     AssetDao assetdao;
     @Autowired
@@ -144,9 +144,9 @@ public class CustomerUserController {
             dao5.deleteDocument(var.getDocument_Id());
             
         }
-        List<Customer_Policy> list4=dao6.getpolicybycustomer(id);
+        List<Customer_Policy> list4=cPolicyDao.getpolicybycustomer(id);
         for (Customer_Policy var : list4) {
-            dao6.delete(var.getPolicy_Number());
+            cPolicyDao.delete(var.getPolicy_Number());
             
         }
         //assets,documents of,claim details.
@@ -445,9 +445,28 @@ public class CustomerUserController {
         return "redirect:/customer/assets";
     }
 
-    @RequestMapping("/self/asset/{asset_id}/delete")
+    @RequestMapping("/asset/{asset_id}/delete")
     public String deleteAsset(@PathVariable int asset_id, Principal p){
         assetdao.delete(asset_id);
+        return "redirect:/customer/assets";
+    }
+
+    @RequestMapping("/asset/{asset_id}/policy/discontinue")
+    public String policyDiscontinue(Model m, Principal p, @PathVariable int asset_id){
+        cPolicyDao.discontinueByAssetId(asset_id);
+        return "redirect:/customer/assets";
+    }
+
+    @GetMapping("/asset/{asset_id}/policy/buy")
+    public String buyPolicy(Model m, Principal p, @PathVariable int asset_id){
+        m.addAttribute("customer_policy", new Customer_Policy());
+        m.addAttribute("policies", PolicyDao.getpolicybytype(assetdao.getTypeById(asset_id)));
+        return "buyPolicy";
+    }
+
+    @PostMapping("/asset/{asset_id}/policy/buy")
+    public String buyPolicy(@ModelAttribute("customer_policy") Customer_Policy cp, Principal p){
+        cPolicyDao.save(cp);
         return "redirect:/customer/assets";
     }
 
