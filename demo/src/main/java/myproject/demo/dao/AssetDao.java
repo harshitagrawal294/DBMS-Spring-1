@@ -80,23 +80,23 @@ public List<Asset> getSecuredAssetByCustomer(int c_id){
             Asset e=new Asset();
             e.setAssetid(rs.getInt(1));
             e.setDetails(rs.getString(2));
-            e.setType(rs.getString(3));
+            e.setCustomerid(rs.getInt(3));
+            e.setType(rs.getString(4));
             return e;
         }
     });
 }
 
 public List<Asset> getUnsecuredAssetByCustomer(int c_id){
-    String query = "select * from Assets as a where a.Asset_Id in " +
-            "( select Asset_Id from Assets except " +
-            "select Asset_Id from Customer_Policies where date_of_expire >= CURDATE() and Customer_Id=?)";
+    String query = "select * from Assets where Asset_Id NOT IN  (select Asset_Id from Customer_Policies where date_of_expire>curdate() and Customer_Id=?)";
     return template.query(query, new Object[]{c_id}, new RowMapper<Asset>() {
         @Override
         public Asset mapRow(ResultSet rs, int i) throws SQLException {
             Asset e=new Asset();
             e.setAssetid(rs.getInt(1));
             e.setDetails(rs.getString(2));
-            e.setType(rs.getString(3));
+            e.setCustomerid(rs.getInt(3));
+            e.setType(rs.getString(4));
             return e;
         }
     });

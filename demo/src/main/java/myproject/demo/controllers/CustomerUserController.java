@@ -441,7 +441,10 @@ public class CustomerUserController {
     @PostMapping("/asset/add")
     public String addAsset(@ModelAttribute("asset") Asset a, Principal p){
         a.setCustomerid(dao.getCustomerByusername(p.getName()).getCustomer_Id());
+        // System.out.println("Customer_Id="+a.getCustomerid());
+        // System.out.println("Type="+a.getType());
         assetdao.save(a);
+
         return "redirect:/customer/assets";
     }
 
@@ -459,13 +462,18 @@ public class CustomerUserController {
 
     @GetMapping("/asset/{asset_id}/policy/buy")
     public String buyPolicy(Model m, Principal p, @PathVariable int asset_id){
-        m.addAttribute("customer_policy", new Customer_Policy());
+        Customer_Policy c=new Customer_Policy();
+        c.setAsset_Id(asset_id);
+        m.addAttribute("command", c);
+
         m.addAttribute("policies", PolicyDao.getpolicybytype(assetdao.getTypeById(asset_id)));
         return "buyPolicy";
     }
 
-    @PostMapping("/asset/{asset_id}/policy/buy")
+    @PostMapping("/asset/policy/buy")
     public String buyPolicy(@ModelAttribute("customer_policy") Customer_Policy cp, Principal p){
+        cp.setCustomer_Id((dao.getCustomerByusername(p.getName())).getCustomer_Id());
+        
         cPolicyDao.save(cp);
         return "redirect:/customer/assets";
     }

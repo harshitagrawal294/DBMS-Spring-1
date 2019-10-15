@@ -48,6 +48,7 @@ import myproject.demo.dao.PolicyDao;
 import myproject.demo.dao.TransactionDao;
 import myproject.demo.dao.Userdao;
 import myproject.demo.dao.WalletDao;
+import myproject.demo.models.Claim_Detail;
 // import myproject.demo.models.Asset;
 // import myproject.demo.models.Company;
 // import myproject.demo.models.Customer;
@@ -370,6 +371,40 @@ public class EmployeeUserController {
         return "redirect:/employee/viewtransactions";
         
     }  
+    @RequestMapping("/allclaims")
+    public String myclaims(Model m)
+    {
+        final Map<Integer,String> assetmap=new HashMap<Integer,String>();
+        final Map<Integer,String> policymap=new HashMap<Integer,String>();
+        final Map<Integer,String> companymap=new HashMap<Integer,String>();
+        final Map<Integer,String> customermap=new HashMap<Integer,String>();
+    	List<Claim_Detail> list=template.query("select cs.Name as CustomerName,Claim_Id,Damage,Status,Date,c.Policy_Number,c.Customer_Id,cp.Asset_Id,cp.Policy_id,Details,Name_of_Policy,p.Company_Id,cmp.Name as cmpname from Customer as cs, Company as cmp,Policy as p,Customer_Policies as cp,Assets as a,Claim_Details as c where c.Policy_Number=cp.Policy_Number and a.Asset_Id=cp.Asset_Id and p.Policy_id=cp.Policy_id and p.Company_Id=cmp.Company_Id and cs.Customer_Id=c.Customer_Id",new ResultSetExtractor<List<Claim_Detail> >(){  
+	        public List<Claim_Detail> extractData(ResultSet rs) throws SQLException,DataAccessException {  
+	        	List<Claim_Detail> list = new ArrayList<Claim_Detail>();  
+	            while(rs.next()){  
+                    Claim_Detail bt = new Claim_Detail();
+	               bt.setClaim_Id(rs.getInt("Claim_Id"));
+	               bt.setDamage(rs.getString("Damage"));
+	               bt.setStatus(rs.getString("Status"));
+	               bt.setDate(rs.getString("Date"));
+                   bt.setPolicy_Number(rs.getInt("Policy_Number"));
+                   bt.setCustomer_Id(rs.getInt("Customer_Id"));
+                      assetmap.put(rs.getInt("Claim_Id"),rs.getString("Details"));
+                      policymap.put(rs.getInt("Claim_Id"),rs.getString("Name_of_Policy"));
+                      companymap.put(rs.getInt("Claim_Id"),rs.getString("Name"));
+                      customermap.put(rs.getInt("Claim_Id"),rs.getString("CustomerName"));
+	               list.add(bt);  
+	            }  
+	            return list;
+	        }  
+        });  
+        m.addAttribute("assetmap", assetmap);
+        m.addAttribute("policymap", policymap);
+        m.addAttribute("companymap", companymap); 
+        m.addAttribute("customermap", customermap); 
+        m.addAttribute("list", list); 
+        return "showallclaims"; 
+    }
 }  
    
 

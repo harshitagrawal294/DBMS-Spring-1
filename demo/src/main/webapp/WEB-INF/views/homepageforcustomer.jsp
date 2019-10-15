@@ -9,7 +9,7 @@
     <a href="/customer/myinfo">My Info</a><br>
     <a href="/customer/policies/vehicle">Policies</a><br>
     <a href="/customer/mypolicies">My Policies</a><br>
-    <a href="/customer/myassets">My assets</a><br>
+    <a href="/customer/assets">My assets</a><br>
     <a href="/customer/myclaims">My claims</a><br>
     <a href="/logout">Logout</a>
 </body>
