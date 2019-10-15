@@ -26,8 +26,7 @@ JdbcTemplate template;
 //     this.template = template;  
 // }  
 public int save(Customer_Policy p){  
-    String sql="insert into Customer_Policies(Date_of_Purchase,date_of_expire,Policy_id,Customer_Id) values('"+p.getDate_of_Purchase()+"','"+p.getDateOfExpire()+"',"+p.getPolicy_Id()+","+p.getCustomer_Id()+")";  
-    // System.out.print(sql);
+    String sql="insert into Customer_Policies(Date_of_Purchase,date_of_expire,Policy_id,Customer_Id) values('"+p.getDate_of_Purchase()+"','"+p.getDateOfExpire()+"',"+p.getPolicy_Id()+","+p.getCustomer_Id()+")";
     return template.update(sql);  
 }  
 public int getlast(){
@@ -69,5 +68,10 @@ public List<Customer_Policy> getpolicybycustomer(int id){
             return e;  
         }  
     });  
-}  
+}
+
+public void discontinueByAssetId(int asset_id){
+    String query = "update Customer_Policies set date_of_expire=subdate(curdate(),1) where Asset_Id="+asset_id;
+    template.update(query);
+}
 }  

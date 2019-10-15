@@ -74,8 +74,8 @@ public List<Policy> getpolicybycompany(int id){
         }  
     });  
 }  
-public List<Policy> getpolicybytype(String id){  
-    return template.query("select * from Policy where type=?",new Object[]{id},new RowMapper<Policy>(){  
+public List<Policy> getpolicybytype(String type){
+    return template.query("select * from Policy where type=?",new Object[]{type},new RowMapper<Policy>(){
         public Policy mapRow(ResultSet rs, int row) throws SQLException {  
         	Policy e=new Policy();  
             e.setPolicy_id(rs.getInt(1));  
