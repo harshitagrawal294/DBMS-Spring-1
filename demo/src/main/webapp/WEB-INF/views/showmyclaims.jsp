@@ -8,14 +8,14 @@
 <tr>
 
 <td>${assetmap.get(doc.getClaim_Id())}</td>
-<td>${doc.getDamage}</td>
+<td>${doc.getDamage()}</td>
 <td>${doc.getDate()}</td>
 <td>${policymap.get(doc.getClaim_Id())}</td>
 <td>${companymap.get(doc.getClaim_Id())}</td>
-<c:if test="${doc.getStatus==0}">
+<c:if test="${doc.getStatus()==0}">
 <td>Pending</td>
 </c:if>
-<c:if test="${doc.getStatus==1}">
+<c:if test="${doc.getStatus()==1}">
 <td>Approved</td>
 </c:if>
 

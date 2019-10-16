@@ -342,13 +342,13 @@ public class CustomerUserController {
                     Claim_Detail bt = new Claim_Detail();
 	               bt.setClaim_Id(rs.getInt("Claim_Id"));
 	               bt.setDamage(rs.getString("Damage"));
-	               bt.setStatus(rs.getString("Status"));
+	               bt.setStatus(rs.getInt("Status"));
 	               bt.setDate(rs.getString("Date"));
                    bt.setPolicy_Number(rs.getInt("Policy_Number"));
                    bt.setCustomer_Id(rs.getInt("Customer_Id"));
                       assetmap.put(rs.getInt("Claim_Id"),rs.getString("Details"));
                       policymap.put(rs.getInt("Claim_Id"),rs.getString("Name_of_Policy"));
-                      companymap.put(rs.getInt("Claim_Id"),rs.getString("Name"));
+                      companymap.put(rs.getInt("Claim_Id"),rs.getString("cmpname"));
 	               list.add(bt);  
 	            }  
 	            return list;

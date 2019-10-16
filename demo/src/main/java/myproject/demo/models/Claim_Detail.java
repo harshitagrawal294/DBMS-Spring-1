@@ -24,7 +24,7 @@ public class Claim_Detail  {
 	private String date;
 
 	
-	private String status;
+	private int status;
 
 	//bi-directional many-to-one association to Customer_Policy
 	
@@ -74,11 +74,11 @@ public class Claim_Detail  {
 		this.date = date;
 	}
 
-	public String getStatus() {
+	public int getStatus() {
 		return this.status;
 	}
 
-	public void setStatus(String status) {
+	public void setStatus(int status) {
 		this.status = status;
 	}
 

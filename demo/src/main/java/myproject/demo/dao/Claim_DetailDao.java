@@ -46,6 +46,11 @@ public int update(Claim_Detail p)
     String sql="update Claim_Details set Damage='"+p.getDamage()+"',Status='"+p.getStatus()+"',Date='"+p.getDate()+"',Policy_Number="+p.getPolicy_Number()+",Customer_Id="+p.getCustomer_Id()+" where Claim_Id="+p.getClaim_Id()+"";
     return template.update(sql);
 }
+public int changestatus(int p)
+{
+    String sql="update Claim_Details set Status=1-Status where Claim_Id="+p+"";
+    return template.update(sql);
+}
 public int getpolicybyclaim(int id)
 {
     return template.queryForObject("select Policy_Number from Claim_Details where Claim_Id=?",new Object[]{id}, Integer.class);
@@ -60,7 +65,7 @@ public List<Claim_Detail> getclaimsbycustomer(int id){
         	Claim_Detail e=new Claim_Detail();  
             e.setClaim_Id(rs.getInt(1));  
             e.setDamage(rs.getString(2));  
-            e.setStatus(rs.getString(3));
+            e.setStatus(rs.getInt(3));
             e.setDate(rs.getString(4));
             e.setPolicy_Number(rs.getInt(5));
             e.setCustomer_Id(rs.getInt(6));
@@ -74,7 +79,7 @@ public List<Claim_Detail> getclaimsbypolicy(int id){
         	Claim_Detail e=new Claim_Detail();  
             e.setClaim_Id(rs.getInt(1));  
             e.setDamage(rs.getString(2));  
-            e.setStatus(rs.getString(3));
+            e.setStatus(rs.getInt(3));
             e.setDate(rs.getString(4));
             e.setPolicy_Number(rs.getInt(5));
             e.setCustomer_Id(rs.getInt(6));
@@ -96,7 +101,7 @@ public Claim_Detail getClaimById(int claim_id){
             Claim_Detail e=new Claim_Detail();
             e.setClaim_Id(rs.getInt("Claim_Id"));
             e.setDamage(rs.getString("Damage"));
-            e.setStatus(rs.getString("Status"));
+            e.setStatus(rs.getInt("Status"));
             e.setDate(rs.getString("Date"));
             e.setPolicy_Number(rs.getInt("Policy_Number"));
             e.setCustomer_Id(rs.getInt("Customer_Id"));

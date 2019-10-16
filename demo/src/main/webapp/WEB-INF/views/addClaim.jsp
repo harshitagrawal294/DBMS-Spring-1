@@ -30,7 +30,11 @@
             </tr>
             <tr>
                 <td> Status : </td>
-                <td><form:input path="status" maxlength="30" required="true"/></td>
+                <td><form:select path="status" required="true">
+                <form:option value="0">Pending</form:option>
+                <form:option value="1">Confirm</form:option>     
+                </form:select>
+                </td>
             </tr>
             <tr>
                 <td> Date : </td>

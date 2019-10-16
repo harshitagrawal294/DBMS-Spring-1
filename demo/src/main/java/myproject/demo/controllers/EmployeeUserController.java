@@ -363,7 +363,7 @@ public class EmployeeUserController {
                     Claim_Detail bt = new Claim_Detail();
 	               bt.setClaim_Id(rs.getInt("Claim_Id"));
 	               bt.setDamage(rs.getString("Damage"));
-	               bt.setStatus(rs.getString("Status"));
+	               bt.setStatus(rs.getInt("Status"));
 	               bt.setDate(rs.getString("Date"));
                    bt.setPolicy_Number(rs.getInt("Policy_Number"));
                    bt.setCustomer_Id(rs.getInt("Customer_Id"));
@@ -396,14 +396,14 @@ public class EmployeeUserController {
     @PostMapping("/claim/add")
     public String addClaim(@ModelAttribute("claim") Claim_Detail c, Principal p){
         claimDetailDao.save(c);
-        System.out.println("OK2");
+        // System.out.println("OK2");
         return "redirect:/employee/ehomepage";
     }
 
     @RequestMapping("/claim/{claim_id}/delete")
     public String deleteClaim(@PathVariable int claim_id){
         claimDetailDao.delete(claim_id);
-        return "redirect:/employee/ehomepage";
+        return "redirect:/employee";
     }
 
     @RequestMapping("/claim/{claim_id}")
@@ -417,12 +417,18 @@ public class EmployeeUserController {
         m.addAttribute("claim", new Claim_Detail());
         return "editClaim";
     }
+    @RequestMapping(value="/editclaimstatus/{id}",method=RequestMethod.GET)
+    public String editclaimstatus(@PathVariable int id){
+        claimDetailDao.changestatus(id);
+        return "redirect:/employee/allclaims";
+    }
 
     @PostMapping("/claim/{claim_id}/edit")
     public String editClaim(@PathVariable int claim_id, @ModelAttribute("claim") Claim_Detail c){
         claimDetailDao.editDamage(claim_id, c.getDamage());
         return "redirect:/employee/ehomepage";
     }
+
 
 //    @RequestMapping("/api/get/assets")
 //    public List<Asset> getApiAssetByCustomerId(@RequestParam(value = "Customer_Id", defaultValue = "1") String Customer_Id){
