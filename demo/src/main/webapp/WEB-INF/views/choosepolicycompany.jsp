@@ -5,7 +5,7 @@
        <form:form method="post" action="/admin/companypoly">  
       	<table >  
           <td>Company: </td>  
-          <td><form:select path="company_Id">
+          <td><form:select path="company_Id" required="true">
           		<c:forEach var="cust" items="${list}">
           		<form:option value="${cust.getCompany_Id()}">${cust.getName()}</form:option>
           		</c:forEach>

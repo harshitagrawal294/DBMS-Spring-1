@@ -6,15 +6,15 @@
       	<table >  
          <tr>  
           <td>Name : </td> 
-          <td><form:input path="name_of_Policy"  maxlength="50"/></td>
+          <td><form:input path="name_of_Policy"  maxlength="50" required="true"/></td>
          </tr>  
          <tr>
              <td>Cost per month: </td>
-             <td><input name="cost_per_month"  /></td>
+             <td><input name="cost_per_month" type="number" required="true"/></td>
          </tr>
         <tr>  
             <td>type :</td>  
-            <td><form:select path="type" >
+            <td><form:select path="type" required="true">
                 <form:option value="health">Health Policy</form:option>
                 <form:option value="property">Property Policy</form:option>
                 <form:option value="vehicle">Vehicle Policy</form:option>
@@ -23,7 +23,7 @@
        
         <tr>  
             <td>Things to cover :</td>  
-            <td><form:input path="Thingscover" maxlength="100"/></td>
+            <td><form:input path="Thingscover" maxlength="100" required="true" /></td>
         </tr>
        
         

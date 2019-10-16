@@ -5,7 +5,7 @@
        <form:form method="post" action="/customer/linkdocsave">  
       	<table >  
           <td>Documents: </td>  
-          <td><form:select path="documentid">
+          <td><form:select path="documentid" required="true">
           		<c:forEach var="cust" items="${list}">
           		<form:option value="${cust.getDocument_Id()}">${cust.getDocument_Type()}</form:option>
           		</c:forEach>

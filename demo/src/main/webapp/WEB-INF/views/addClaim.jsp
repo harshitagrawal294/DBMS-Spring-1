@@ -8,7 +8,7 @@
       	    <tr>
       	        <td> Customer </td>
       	        <td>
-      	            <form:select path="Customer_Id" id="customer" onchange="getAssets()">
+      	            <form:select path="Customer_Id" required="true" id="customer" onchange="getAssets()">
       	            <form:option value="0">--</form:option>
       	            <c:forEach var="customer" items="${customers}">
       	            <form:option value="${customer.getCustomer_Id()}">${customer.getName()}</form:option>
@@ -19,22 +19,22 @@
       	    <tr>
       	        <td> Assets : </td>
       	        <td>
-      	            <select id="assets" onchange="setPolicyNumber()">
+      	            <select id="assets" required="true" onchange="setPolicyNumber()">
       	            </select>
       	        </td>
       	    </tr>
       	    <form:hidden path="Policy_Number" id="policy_number" />
             <tr>
                 <td> Damage : </td>
-                <td><form:input path="damage"/></td>
+                <td><form:input path="damage" type="text" maxlength="100" required="true" /></td>
             </tr>
             <tr>
                 <td> Status : </td>
-                <td><form:input path="status"/></td>
+                <td><form:input path="status" maxlength="30" required="true"/></td>
             </tr>
             <tr>
                 <td> Date : </td>
-                <td><form:input path="date" type="date"/></td>
+                <td><form:input path="date" type="date" required="true"/></td>
             </tr>
             <tr>
                 <td><input type="submit" value="Save" /></td>

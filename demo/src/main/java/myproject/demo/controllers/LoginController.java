@@ -48,7 +48,7 @@ public class LoginController {
         userService.save(user);
 
         securityService.autoLogin(user.getUsername(), user.getPassword());
-        return "redirect:/";
+        return "redirect:/customer";
     }
 
     // @GetMapping(value = { "/login", "/" })

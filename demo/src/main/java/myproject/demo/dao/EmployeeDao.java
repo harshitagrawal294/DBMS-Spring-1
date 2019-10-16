@@ -52,7 +52,7 @@ public boolean userExist(String username) {
         return true;
 }
 public int update(Employee p){
-    String sql="update Employee set Name='"+p.getName()+"',Date_of_joining='"+p.getDate_of_joining()+"',Street='"+p.getStreet()+"',Contact_Information='"+p.getContact_Information()+"',Gender='"+p.getGender()+"',Pincode='"+p.getPincode()+"',Country='"+p.getCountry()+"',Identification="+p.getIdentification()+",Office_Id="+p.getOffice_Id()+" where User_Id="+p.getUser_Id()+",username='"+p.getUsername()+"'";
+    String sql="update Employee set Name='"+p.getName()+"',Date_of_joining='"+p.getDate_of_joining()+"',Street='"+p.getStreet()+"',Contact_Information='"+p.getContact_Information()+"',Gender='"+p.getGender()+"',Pincode='"+p.getPincode()+"',Country='"+p.getCountry()+"',Identification="+p.getIdentification()+",Office_Id="+p.getOffice_Id()+" ,username='"+p.getUsername()+"'where User_Id="+p.getUser_Id()+"";
     return template.update(sql);
 }
 public int updateoffice(Employee p){

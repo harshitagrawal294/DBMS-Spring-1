@@ -9,7 +9,7 @@
         </tr> 
         <tr>
             <td>New Salary :</td>  
-            <td><form:input path="salary" /></td>
+            <td><form:input path="salary" Type="number" required="true" /></td>
         </tr>
          <tr>  
           <td><input type="submit" value="Save" /></td>  

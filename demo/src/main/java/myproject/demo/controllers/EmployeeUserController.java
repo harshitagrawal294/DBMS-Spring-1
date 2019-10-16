@@ -369,7 +369,7 @@ public class EmployeeUserController {
                    bt.setCustomer_Id(rs.getInt("Customer_Id"));
                       assetmap.put(rs.getInt("Claim_Id"),rs.getString("Details"));
                       policymap.put(rs.getInt("Claim_Id"),rs.getString("Name_of_Policy"));
-                      companymap.put(rs.getInt("Claim_Id"),rs.getString("Name"));
+                      companymap.put(rs.getInt("Claim_Id"),rs.getString("cmpname"));
                       customermap.put(rs.getInt("Claim_Id"),rs.getString("CustomerName"));
 	               list.add(bt);  
 	            }  

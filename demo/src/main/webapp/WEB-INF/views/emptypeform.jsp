@@ -6,11 +6,11 @@
       	<table >  
          <tr>  
           <td>Type : </td> 
-          <td><form:input path="type"  maxlength="30"/></td>
+          <td><form:input path="type"  maxlength="30" required="true"/></td>
          </tr>  
         <tr>  
             <td>Salary :</td>  
-            <td><form:input path="salary" /></td>
+            <td><form:input path="salary" Type="number" required="true"/></td>
         </tr>
          <tr>  
           <td><input type="submit" value="Save" /></td>  

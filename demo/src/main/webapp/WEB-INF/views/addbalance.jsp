@@ -10,7 +10,7 @@
          </tr>  
         <tr>  
             <td>Money :</td>  
-            <td><form:input path="balance" /></td>
+            <td><form:input path="balance" type="number" required="true"/></td>
         </tr>
         
          <tr>  

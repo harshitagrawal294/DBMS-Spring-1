@@ -75,6 +75,8 @@ public class CustomerUserController {
     DocumentofDao DocumentofDao;
     @Autowired
     TransactionDao TransactionDao;
+    @Autowired
+    WalletDao WalletDao;
 
     // add customer information,
       
@@ -378,7 +380,7 @@ public class CustomerUserController {
                    bt.setCustomer_Id(rs.getInt("Customer_Id"));
                       assetmap.put(rs.getInt("Policy_Number"),rs.getString("Details"));
                       policymap.put(rs.getInt("Policy_Number"),rs.getString("Name_of_Policy"));
-                      companymap.put(rs.getInt("Policy_Number"),rs.getString("Name"));
+                      companymap.put(rs.getInt("Policy_Number"),rs.getString("cmpname"));
 	               list.add(bt);  
 	            }  
 	            return list;
@@ -461,11 +463,17 @@ public class CustomerUserController {
     }
 
     @GetMapping("/asset/{asset_id}/policy/buy")
-    public String buyPolicy(Model m, Principal p, @PathVariable int asset_id){
+    public String buyPolicy(Model m, Principal p, @PathVariable int asset_id,@RequestParam(name="error", defaultValue = "false", required = false) String error){
         Customer_Policy c=new Customer_Policy();
         c.setAsset_Id(asset_id);
         m.addAttribute("command", c);
-
+        int p1=0;
+        System.out.println(error);
+        if("true".equals(error)){
+            System.out.println("OK");
+            p1=1;
+        }
+        m.addAttribute("p1", p1);
         m.addAttribute("policies", PolicyDao.getpolicybytype(assetdao.getTypeById(asset_id)));
         return "buyPolicy";
     }
@@ -473,7 +481,13 @@ public class CustomerUserController {
     @PostMapping("/asset/policy/buy")
     public String buyPolicy(@ModelAttribute("customer_policy") Customer_Policy cp, Principal p){
         cp.setCustomer_Id((dao.getCustomerByusername(p.getName())).getCustomer_Id());
-        
+        int money=WalletDao.getbalancebyid((dao.getCustomerByusername(p.getName())).getCustomer_Id());
+        int id=cp.getPolicy_Id();
+        int cost=PolicyDao.getbalancebyid(id);
+        if(cost>money){
+            return "redirect:/customer/asset/"+cp.getAsset_Id()+"/policy/buy?error=true";
+        }
+        WalletDao.decreasebalance((dao.getCustomerByusername(p.getName())).getCustomer_Id(), cost);
         cPolicyDao.save(cp);
         return "redirect:/customer/assets";
     }

@@ -5,7 +5,7 @@
        <form:form method="post" action="/admin/convertemployee">  
       	<table >  
           <td>Users:</td>  
-          <td><form:select path="username">
+          <td><form:select path="username" required="true">
           		<c:forEach var="cust" items="${list}">
           		<form:option value="${cust.getUsername()}">${cust.getUsername()}</form:option>
           		</c:forEach>

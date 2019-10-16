@@ -6,7 +6,7 @@
       	<table >  
          <tr>  
           <td>Remarks : </td> 
-          <td><form:input path="Remarks"  /></td>
+          <td><form:input path="Remarks"  maxlength="200" required="true"/></td>
          </tr>  
          <tr><form:hidden path="Serial_Number"/></tr>
          <tr><form:hidden path="User_Id"/></tr>

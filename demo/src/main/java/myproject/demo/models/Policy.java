@@ -16,7 +16,7 @@ public class Policy  {
 	private int policy_id;
 
 	
-	private float cost_per_month;
+	private int cost_per_month;
 
 	
 	private String name_of_Policy;
@@ -59,11 +59,11 @@ public class Policy  {
 		this.Company_Id = policy_id;
 	}
 
-	public float getCost_per_month() {
+	public int getCost_per_month() {
 		return this.cost_per_month;
 	}
 
-	public void setCost_per_month(float cost_per_month) {
+	public void setCost_per_month(int cost_per_month) {
 		this.cost_per_month = cost_per_month;
 	}
 

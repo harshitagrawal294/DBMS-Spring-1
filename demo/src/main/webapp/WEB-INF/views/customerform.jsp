@@ -6,7 +6,7 @@
       	<table >  
          <tr>  
           <td>Name : </td> 
-          <td><form:input path="name"  /></td>
+          <td><form:input path="name" maxlength="50" required="true"/></td>
          </tr>  
          <tr>  
             <!-- <td>Us : </td>  -->
@@ -14,15 +14,15 @@
            </tr>  
         <tr>  
             <td>Country :</td>  
-            <td><form:input path="country" maxlength="20"/></td>
+            <td><form:input path="country" maxlength="20" required="true"/></td>
         </tr>
         <tr>  
             <td>Street :</td>  
-            <td><form:input path="street" maxlength="50"/></td>
+            <td><form:input path="street" maxlength="50" required="true"/></td>
         </tr>
         <tr>  
             <td>Pincode :</td>  
-            <td><form:input path="pincode" maxlength="20"/></td>
+            <td><form:input path="pincode" type="number" required="true"/></td>
         </tr>
 
          <tr>  

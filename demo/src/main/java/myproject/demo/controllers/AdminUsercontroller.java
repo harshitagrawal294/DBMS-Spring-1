@@ -267,6 +267,8 @@ public class AdminUsercontroller {
         
         Employee p=new Employee();
         p.setUser_Id(id);
+        String username=(EmployeeDao.getEmployeeById(id)).getUsername();
+        p.setUsername(username);
         m.addAttribute("command", p);
         List<Employee_type> list1=Employee_typeDao.getEmployee_type();
         List<Office> list2=officedao.getOffice();
@@ -278,6 +280,7 @@ public class AdminUsercontroller {
     
     @RequestMapping(value="/editform",method = RequestMethod.POST)  
     public String editemp(@ModelAttribute("cust") Employee cust){  
+
         EmployeeDao.update(cust);
         return "redirect:/admin/viewemployee";//will redirect to viewemp request mapping  
     }  

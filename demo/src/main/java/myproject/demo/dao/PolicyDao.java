@@ -48,6 +48,10 @@ public String getnamebyid(int id){
     String sql="select Name_of_Policy from Policy where Policy_id=?";
     return template.queryForObject(sql, new Object[]{id}, String.class);
 }
+public int getbalancebyid(int id){
+    String sql="select Cost_per_month from Policy where Policy_id=?";
+    return template.queryForObject(sql, new Object[]{id}, Integer.class);
+}
 public int getCompanybyid(int id){
     String sql="select Company_Id from Policy where Policy_id=?";
     return template.queryForObject(sql, new Object[]{id}, Integer.class);
@@ -58,7 +62,7 @@ public List<Policy> getPolicy(){
         	Policy e=new Policy();  
             e.setPolicy_id(rs.getInt(1));  
             e.setName_of_Policy(rs.getString(2));  
-            e.setCost_per_month(rs.getFloat(3));
+            e.setCost_per_month(rs.getInt(3));
             e.setThingscover(rs.getString(4));
             e.setType(rs.getString(5));
             e.setCompany_Id(rs.getInt(6));
@@ -72,7 +76,7 @@ public List<Policy> getpolicybycompany(int id){
         	Policy e=new Policy();  
             e.setPolicy_id(rs.getInt(1));  
             e.setName_of_Policy(rs.getString(2));  
-            e.setCost_per_month(rs.getFloat(3));
+            e.setCost_per_month(rs.getInt(3));
             e.setThingscover(rs.getString(4));
             e.setType(rs.getString(5));
             e.setCompany_Id(rs.getInt(6));
@@ -86,7 +90,7 @@ public List<Policy> getpolicybytype(String type){
         	Policy e=new Policy();  
             e.setPolicy_id(rs.getInt(1));  
             e.setName_of_Policy(rs.getString(2));  
-            e.setCost_per_month(rs.getFloat(3));
+            e.setCost_per_month(rs.getInt(3));
             e.setThingscover(rs.getString(4));
             e.setType(rs.getString(5));
             e.setCompany_Id(rs.getInt(6));

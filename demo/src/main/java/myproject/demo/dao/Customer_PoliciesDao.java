@@ -49,8 +49,8 @@ public List<Customer_Policy> getPolicy(){
             e.setDate_of_Purchase(rs.getString(2));  
             e.setDateOfExpire(rs.getString(3));
             e.setPolicy_Id(rs.getInt(4));
-            // e.setUser_Id(rs.getInt(5));
-            e.setCustomer_Id(rs.getInt(6));
+            e.setAsset_Id(rs.getInt(6));
+            e.setCustomer_Id(rs.getInt(5));
             return e;  
         }  
     });  
@@ -63,8 +63,8 @@ public List<Customer_Policy> getpolicybycustomer(int id){
             e.setDate_of_Purchase(rs.getString(2));  
             e.setDateOfExpire(rs.getString(3));
             e.setPolicy_Id(rs.getInt(4));
-            // e.setUser_Id(rs.getInt(5));
-            e.setCustomer_Id(rs.getInt(6));
+            e.setAsset_Id(rs.getInt(6));
+            e.setCustomer_Id(rs.getInt(5));
             return e;  
         }  
     });  

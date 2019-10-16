@@ -51,5 +51,10 @@ public int getWalletid(int c)
     return template.queryForObject(sql,new Object[]{c},Integer.class);
 }
 
+public int decreasebalance(int c,int cost)
+{
+    String sql="update Wallet set Balance=Balance-"+cost+" where Customer_Id="+c;
+    return template.update(sql);
+}
 
 }  

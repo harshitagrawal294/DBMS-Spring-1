@@ -10,7 +10,7 @@
          </tr>  
         <tr>  
             <td>Contact :</td>  
-            <td><form:input path="contact" maxlength="20"/></td>
+            <td><form:input path="contact" type="text" pattern="[0-9]{10}" required="true"/></td>
         </tr>
         
          <tr>  

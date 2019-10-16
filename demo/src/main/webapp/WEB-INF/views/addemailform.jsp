@@ -10,7 +10,7 @@
          </tr>  
         <tr>  
             <td>Email :</td>  
-            <td><form:input path="Email_Id" maxlength="40"/></td>
+            <td><form:input path="Email_Id" type="email" maxlength="40" required="true"/></td>
         </tr>
         
          <tr>  

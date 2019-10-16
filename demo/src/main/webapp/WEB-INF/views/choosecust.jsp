@@ -6,14 +6,14 @@
       	<table >  
           <td>Customers:</td>  
 
-          <td><form:select path="Customer_Id">
+          <td><form:select path="Customer_Id" required="true">
           		<c:forEach var="cust" items="${list}">
           		<form:option value="${cust.getCustomer_Id()}">${cust.getName()}</form:option>
           		</c:forEach>
           	</form:select>
           </td>
           <tr><td>Money: </td>
-            <td><form:input path="balance"  /></td>
+            <td><form:input path="balance"  type="number" required="true"/></td>
          </tr>
          </tr> 
          <tr>  

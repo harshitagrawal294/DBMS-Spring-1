@@ -15,7 +15,7 @@ public class Wallet  {
 	private int wallet_id;
 
 	
-	private float balance;
+	private int balance;
 
 	//bi-directional many-to-one association to Customer
 	
@@ -33,11 +33,11 @@ public class Wallet  {
 		this.wallet_id = wallet_id;
 	}
 
-	public float getBalance() {
+	public int getBalance() {
 		return this.balance;
 	}
 
-	public void setBalance(float balance) {
+	public void setBalance(int balance) {
 		this.balance = balance;
 	}
 
