@@ -1,8 +1,13 @@
-<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>  
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>  
 
 		<h1>Add New Claim Details</h1>
-       <form:form method="post" action="/claimdetails/save">  
+       <select>
+        <option></option
+       </select
+
+
+       <form:form method="post" action="/claimdetails/save">
       	<table >  
          <tr>  
           <td>Damage : </td> 
@@ -36,4 +41,69 @@
           <td><input type="submit" value="Save" /></td>  
          </tr>  
         </table>  
-       </form:form>  
+       </form:form>
+
+       <script>
+           function addMfName(mf_names) {
+               var i;
+               var opts="<option value=\"-1\" > -- </option>";
+               console.log(mf_names.length)
+               for(i=0; i<mf_names.length; i++){
+                   opts += "<option value=" + mf_names[i] +  ">" + mf_names[i] + "</option>"
+               }
+               $("#mf_name").html(opts);
+           }
+           function getMfName() {
+               $.ajax({
+                   url:"/api/get/mf_names",
+                   type:"get",
+                   data:{
+                       is_generic: $('#is_gen').children("option:selected").val()
+                   },
+                   success: function(data, status, xhr){
+                       console.log(data);
+                       console.log(typeof data);
+                       addMfName(data);
+                   }
+               })
+           }
+           function addDrugName(drug_names) {
+               var i;
+               var opts="<option value=\"-1\" > -- </option>";
+               for(i=0; i<drug_names.length; i++){
+                   opts += "<option value=" + drug_names[i] +  ">" + drug_names[i] + "</option>"
+               }
+               $("#drug_name").html(opts);
+           }
+           function getDrugName() {
+                $.ajax({
+                   url:"/api/get/drug_names",
+                   type:"get",
+                   data:{
+                       is_generic: $('#is_gen').children("option:selected").val(),
+                       mf_name: $('#mf_name').children("option:selected").val()
+                   },
+                   success: function(data, status, xhr){
+                       console.log(data);
+                       console.log(typeof data);
+                       addDrugName(data);
+                   }
+               })
+           }
+           function setDrugID() {
+               $.ajax({
+                   url:"/api/get/drug_id",
+                   type:"get",
+                   data:{
+                       is_generic: $('#is_gen').children("option:selected").val(),
+                       mf_name: $('#mf_name').children("option:selected").val(),
+                       drug_name: $('#drug_name').children("option:selected").val()
+                   },
+                   success: function(data, status, xhr){
+                       console.log(data)
+                       console.log(typeof data)
+                       $('#drug_id').attr('value',data);
+                   }
+               })
+           }
+       </script>

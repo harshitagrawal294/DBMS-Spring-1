@@ -74,4 +74,9 @@ public void discontinueByAssetId(int asset_id){
     String query = "update Customer_Policies set date_of_expire=subdate(curdate(),1) where Asset_Id="+asset_id;
     template.update(query);
 }
+
+public int getPolicyNumber(int customer_id, int asset_id){
+    String query = "select Policy_Number from Customer_Policies where Customer_Id=? and Asset_Id=?";
+    return template.queryForObject(query, new Object[]{customer_id, asset_id}, Integer.class);
+}
 }  

@@ -18,37 +18,20 @@ import java.util.Map;
 // import java.util.List;
 // import java.util.Map;
 
+import myproject.demo.dao.*;
+import myproject.demo.models.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.*;
 // import org.springframework.ui.Model;
 // import org.springframework.web.bind.annotation.ModelAttribute;
 // import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
 // import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestMethod;
 
-import myproject.demo.dao.AssetDao;
-import myproject.demo.dao.CompanyDao;
-import myproject.demo.dao.CustomerContactsDao;
-import myproject.demo.dao.CustomerDao;
-import myproject.demo.dao.CustomerEmailDao;
-import myproject.demo.dao.Customer_PoliciesDao;
-import myproject.demo.dao.DocumentDao;
-import myproject.demo.dao.EmployeeDao;
-import myproject.demo.dao.Employee_typeDao;
-import myproject.demo.dao.FeedbackDao;
-import myproject.demo.dao.OfficeDao;
-import myproject.demo.dao.PolicyDao;
-import myproject.demo.dao.TransactionDao;
-import myproject.demo.dao.Userdao;
-import myproject.demo.dao.WalletDao;
-import myproject.demo.models.Claim_Detail;
 // import myproject.demo.models.Asset;
 // import myproject.demo.models.Company;
 // import myproject.demo.models.Customer;
@@ -61,13 +44,6 @@ import myproject.demo.models.Claim_Detail;
 // import myproject.demo.models.Office;
 // // import myproject.demo.models.User;
 // import myproject.demo.models.Wallet;
-import myproject.demo.models.Customer;
-import myproject.demo.models.Document;
-import myproject.demo.models.Employee;
-import myproject.demo.models.Feedback;
-import myproject.demo.models.Policy;
-import myproject.demo.models.Transaction;
-import myproject.demo.models.Wallet;
 
 
 @Controller
@@ -87,6 +63,8 @@ public class EmployeeUserController {
     Userdao Userdao;
     @Autowired 
     Customer_PoliciesDao Customer_PoliciesDao;
+    @Autowired
+    Claim_DetailDao claimDetailDao;
     @Autowired
     AssetDao assetdao;
     @Autowired
@@ -405,7 +383,62 @@ public class EmployeeUserController {
         m.addAttribute("list", list); 
         return "showallclaims"; 
     }
-}  
-   
+
+    /////////////////////////////////////// Claim Section //////////////////////////////////////////////////////////////
+
+    @GetMapping("/claim/add")
+    public String addClaim(Model m, Principal p){
+        m.addAttribute("customers", customerdao.getAllCustomer());
+        m.addAttribute("claim", new Claim_Detail());
+        return "addClaim";
+    }
+
+    @PostMapping("/claim/add")
+    public String addClaim(@ModelAttribute("claim") Claim_Detail c, Principal p){
+        claimDetailDao.save(c);
+        System.out.println("OK2");
+        return "redirect:/employee/ehomepage";
+    }
+
+    @RequestMapping("/claim/{claim_id}/delete")
+    public String deleteClaim(@PathVariable int claim_id){
+        claimDetailDao.delete(claim_id);
+        return "redirect:/employee/ehomepage";
+    }
+
+    @RequestMapping("/claim/{claim_id}")
+    public String viewClaim(@PathVariable int claim_id, Model m){
+        m.addAttribute("claim", claimDetailDao.getClaimById(claim_id));
+        return "viewClaim";
+    }
+
+    @GetMapping("/claim/{claim_id}/edit")
+    public String editClaim(@PathVariable int claim_id, Principal p, Model m){
+        m.addAttribute("claim", new Claim_Detail());
+        return "editClaim";
+    }
+
+    @PostMapping("/claim/{claim_id}/edit")
+    public String editClaim(@PathVariable int claim_id, @ModelAttribute("claim") Claim_Detail c){
+        claimDetailDao.editDamage(claim_id, c.getDamage());
+        return "redirect:/employee/ehomepage";
+    }
+
+//    @RequestMapping("/api/get/assets")
+//    public List<Asset> getApiAssetByCustomerId(@RequestParam(value = "Customer_Id", defaultValue = "1") String Customer_Id){
+//        return assetdao.getassetsbycustomer(Integer.parseInt(Customer_Id));
+//    }
+
+//    @RequestMapping("/api/get_policy_number")
+//    public int getApiPolicyNo(@RequestParam int Customer_Id, @RequestParam int Asset_Id){
+//        return Customer_PoliciesDao.getPolicyNumber(Customer_Id, Asset_Id);
+//    }
+
+    ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+}
+
+
 
 
