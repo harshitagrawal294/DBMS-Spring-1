@@ -20,11 +20,12 @@ import myproject.demo.models.Claim_Detail;
 // import myproject.demo.models.Company;
 // import myproject.demo.models.Office;
 // import myproject.demo.models.Wallet; 
+
 @Transactional
 @Repository
 public class Claim_DetailDao {
-@Autowired 
-JdbcTemplate template;  
+@Autowired
+JdbcTemplate template;
 
 
 
@@ -82,6 +83,28 @@ public List<Claim_Detail> getclaimsbypolicy(int id){
     });  
 }
 
+public void editDamage(int claim_id, String damage){
+    String query = "update Calim_Details set Damage=? where Claim_Id=?";
+    template.update(query, damage, claim_id);
+}
+
+public Claim_Detail getClaimById(int claim_id){
+    String query = "select * from Claim_Detail where Claim_Id="+claim_id;
+    return template.queryForObject(query, new RowMapper<Claim_Detail>() {
+        @Override
+        public Claim_Detail mapRow(ResultSet rs, int i) throws SQLException {
+            Claim_Detail e=new Claim_Detail();
+            e.setClaim_Id(rs.getInt("Claim_Id"));
+            e.setDamage(rs.getString("Damage"));
+            e.setStatus(rs.getString("Status"));
+            e.setDate(rs.getString("Date"));
+            e.setPolicy_Number(rs.getInt("Policy_Number"));
+            e.setCustomer_Id(rs.getInt("Customer_Id"));
+            return e;
+        }
+    });
+
+}
 
 
 }  
