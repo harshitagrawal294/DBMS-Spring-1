@@ -26,7 +26,7 @@ JdbcTemplate template;
 //     this.template = template;  
 // }  
 public int save(Customer_Policy p){  
-    String sql="insert into Customer_Policies(Date_of_Purchase,date_of_expire,Policy_id,Customer_Id,Asset_Id) values(curdate(),curdate()+30,"+p.getPolicy_Id()+","+p.getCustomer_Id()+","+p.getAsset_Id()+")";
+    String sql="insert into Customer_Policies(Date_of_Purchase,date_of_expire,Policy_id,Customer_Id,Asset_Id) values(curdate(),DATE_ADD(curdate(), INTERVAL 30 DAY),"+p.getPolicy_Id()+","+p.getCustomer_Id()+","+p.getAsset_Id()+")";
     return template.update(sql);  
 }  
 public int getlast(){

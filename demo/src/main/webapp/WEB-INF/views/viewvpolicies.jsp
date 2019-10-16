@@ -1,7 +1,7 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>  
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>  
 
-<h1>${t} Policies </h1>
+<h1>${t} Policies (Add Company name who offered it)</h1>
 <table border="2" width="70%" cellpadding="2">
 <tr><th>Id</th><th>Name</th><th>Cost</th><th>Things covered</th><th>Type</th><th>Company id</th></tr>
 <c:forEach var="cust" items="${list}"> 

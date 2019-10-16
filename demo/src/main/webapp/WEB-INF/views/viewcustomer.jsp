@@ -11,13 +11,9 @@
 <td>${cust.street}</td>
 <td>${cust.pincode}</td>
 <td>${cust.country}</td>
-<td><a href="/customer/deletecustomer/${cust.customer_Id}">Delete</a></td>
-<td><a href="/customer/showcontact/${cust.customer_Id}">Show Contacts</a></td>
-<td><a href="/customer/addcontact/${cust.customer_Id}">Add Contacts</a></td>
-<td><a href="/customer/showemails/${cust.customer_Id}">Show Emails</a></td>
-<td><a href="/customer/addemails/${cust.customer_Id}">Add Emails</a></td>
+<td><a href="/admin/deletecustomer/${cust.customer_Id}">Delete</a></td>
 </tr>
 </c:forEach>
 </table>
 <br/>
-<a href="/customer/customerform">Add New Customer</a>
+<!-- <a href="/customer/customerform">Add New Customer</a> -->

@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>  
 
 		<h1>Add New Policy</h1>
-       <form:form method="post" action="/policy/save">  
+       <form:form method="post" action="/admin/policysave">  
       	<table >  
          <tr>  
           <td>Name : </td> 
@@ -15,6 +15,11 @@
         <tr>  
             <td>type :</td>  
             <td><form:input path="type" maxlength="20"/></td>
+        </tr>
+       
+        <tr>  
+            <td>Things to cover :</td>  
+            <td><form:input path="Thingscover" maxlength="100"/></td>
         </tr>
        
         

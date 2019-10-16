@@ -1,7 +1,7 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
-<h1>Your Active Policy List</h1>
+<h1>Your Active Policy List(show proper information)</h1>
 <table border="2" width="70%" cellpadding="2">
 <tr><th>Secured Asset id</th><th>details</th><th>Type</th><th>Policy name</th><th>Offered by</th><th>Status</th></tr>
 <c:forEach var="row" items="${secured_assets}">
@@ -28,3 +28,4 @@
 </c:forEach>
 </table>
 <br/>
+<a href="/customer/asset/add">Add Asset</a>

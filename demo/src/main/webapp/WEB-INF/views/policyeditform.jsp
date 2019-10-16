@@ -2,11 +2,12 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>  
 
 		<h1>Edit Policy </h1>
-       <form:form method="post" action="/policy/update">  
+       <form:form method="post" action="/admin/updatepolicy">  
       	<table >
                 <tr>  
                 <!-- <td>Office_Id : </td>  -->
                 <td><form:hidden path="policy_id" /></td>
+                <td><form:hidden path="Company_Id" /></td>
                 </tr>      
                 <tr>  
                 <td>Name : </td> 
@@ -17,20 +18,15 @@
                     <td><input name="cost_per_month" /></td>
                 </tr>
                 <tr>  
-                    <td>type :</td>  
-                    <td><form:input path="type" maxlength="20"/></td>
+                    <!-- <td>type :</td>   -->
+                    <td><form:hidden path="type" /></td>
                 </tr>
-                
-                
                 <tr>  
-                    <td>Company name :</td>  
-                    <td><form:select path="Company_Id">
-                        <c:forEach var="cust" items="${list}">
-                        <form:option value="${cust.getCompany_Id()}">${cust.getName()}</form:option>
-                        </c:forEach>
-                    </form:select>
-                </td>
-                </tr>
+                        <td>Things to cover :</td>  
+                        <td><form:input path="Thingscover" maxlength="100"/></td>
+                    </tr>
+                
+                
                 
         
                 <tr>  

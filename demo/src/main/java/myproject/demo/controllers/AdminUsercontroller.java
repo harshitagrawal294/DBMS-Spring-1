@@ -1,5 +1,10 @@
 package myproject.demo.controllers;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
+
 // import java.security.Principal;
 
 // import org.springframework.beans.factory.annotation.Value;
@@ -11,7 +16,9 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -28,7 +35,9 @@ import myproject.demo.dao.Customer_PoliciesDao;
 import myproject.demo.dao.DocumentDao;
 import myproject.demo.dao.EmployeeDao;
 import myproject.demo.dao.Employee_typeDao;
+import myproject.demo.dao.FeedbackDao;
 import myproject.demo.dao.OfficeDao;
+import myproject.demo.dao.PolicyDao;
 import myproject.demo.dao.Userdao;
 import myproject.demo.dao.WalletDao;
 // import myproject.demo.models.Asset;
@@ -40,7 +49,9 @@ import myproject.demo.models.Customer;
 // import myproject.demo.models.Document;
 import myproject.demo.models.Employee;
 import myproject.demo.models.Employee_type;
+import myproject.demo.models.Feedback;
 import myproject.demo.models.Office;
+import myproject.demo.models.Policy;
 // import myproject.demo.models.User;
 // import myproject.demo.models.Wallet;
 import myproject.demo.models.User;
@@ -72,9 +83,13 @@ public class AdminUsercontroller {
     @Autowired
     Employee_typeDao Employee_typeDao;
     @Autowired
-    JdbcTemplate JdbcTemplate;
+    JdbcTemplate template;
     @Autowired
     EmployeeDao EmployeeDao;
+    @Autowired
+    FeedbackDao FeedbackDao;
+    @Autowired
+    PolicyDao PolicyDao;
     // add customer information,
       
     /*It displays a form to input data, here "command" is a reserved request attribute 
@@ -233,7 +248,7 @@ public class AdminUsercontroller {
     public String viewemployee(Model m){  
         // List<Employee> list=dao.getEmployee();  
         // m.addAttribute("list",list);
-        List<Map<String,Object>> rows=JdbcTemplate.queryForList("select e.Name,e.User_Id,e.Date_of_joining,e.Street,e.Contact_Information,e.Gender,e.Pincode,e.Country,e.Identification,e.Office_Id,et.Type as emptype,o.Office_name as oname from Employee_type as et,Office as o,Employee as e where e.Office_Id=o.Office_Id and e.Identification=et.Identification");
+        List<Map<String,Object>> rows=template.queryForList("select e.Name,e.User_Id,e.Date_of_joining,e.Street,e.Contact_Information,e.Gender,e.Pincode,e.Country,e.Identification,e.Office_Id,et.Type as emptype,o.Office_name as oname from Employee_type as et,Office as o,Employee as e where e.Office_Id=o.Office_Id and e.Identification=et.Identification");
         m.addAttribute("rows", rows);
         return "viewemployee";  
     } 
@@ -265,6 +280,101 @@ public class AdminUsercontroller {
 
     ////////////////////////////////////////
     ////customer////////////////////////////
-
+    @RequestMapping("/viewcustomer")
+    public String viewcostumer(Model m)
+    {
+        List<Customer> list=customerdao.getCustomer();
+        m.addAttribute("list", list);
+        return "viewcustomer";  
+    }
+    @RequestMapping(value="/deletecustomer/{id}",method=RequestMethod.GET)  
+    public String delete(Model m,@PathVariable int id){ 
+    customerdao.delete(id); 
+        return "redirect:/admin";
+    }
+    @RequestMapping("/feedback")
+    public String feedback(Model m)
+    {
+        final Map<Integer,String> map=new HashMap<Integer,String>();
+    	List<Feedback> list=template.query("select Serial_Number,Remarks,e.User_Id as User_Id,Name from Feedback as f,Employee as e where f.User_Id=e.User_Id",new ResultSetExtractor<List<Feedback> >(){  
+	        public List<Feedback> extractData(ResultSet rs) throws SQLException,DataAccessException {  
+	        	List<Feedback> list = new ArrayList<Feedback>();  
+	            while(rs.next()){  
+                    Feedback bt = new Feedback();
+	               bt.setSerial_Number(rs.getInt("Serial_Number"));
+	               bt.setRemarks(rs.getString("Remarks"));
+	               bt.setUser_Id(rs.getInt("User_Id"));
+	               map.put(rs.getInt("User_Id"),rs.getString("Name"));
+	               list.add(bt);  
+	            }  
+	            return list;
+	        }  
+        });  
+        // Employee e=EmployeeDao.getemployeeByusername(principal.getName());
+        m.addAttribute("list",list);
+        m.addAttribute("map", map);
+        // m.addAttribute("e", e);
+        return "forums";
+    }
+    @RequestMapping(value="/deletefeedback/{a}",method = RequestMethod.GET)  
+    public String deletefeedback(@PathVariable int a){  
+        FeedbackDao.delete(a);
+        return "redirect:/admin/feedback";
+    }
+    @RequestMapping("/policyform")  
+    public String showpolicyform(Model m){  
+        List<Company> list=CompanyDao.getCompany();
+        m.addAttribute("list", list);
+    	m.addAttribute("command", new Policy());
+    	return "policyform"; 
+    }  
+    /*It saves object into database. The @ModelAttribute puts request data 
+     *  into model object. You need to mention RequestMethod.POST method  
+     *  because default request is GET*/  
+    @RequestMapping(value="/policysave",method = RequestMethod.POST)  
+    public String save(@ModelAttribute("cust") Policy cust){  
+        PolicyDao.savenew(cust);
+        // int c=dao.getlastcustomer();
+        return "redirect:/admin/viewpolicy";//will redirect to viewemp request mapping  
+    } 
+    @RequestMapping("/viewpolicy")  
+    public String viewpolicy(Model m){  
+        List<Policy> list=PolicyDao.getPolicy();  
+        m.addAttribute("list",list);
+        return "viewpolicy";  
+    }   
+    @RequestMapping(value="/deletepolicy/{id}",method = RequestMethod.GET)  
+    public String deletepolicy(@PathVariable int id){  
+        
+        PolicyDao.delete(id);
+        return "redirect:/admin/viewpolicy";  
+    }
+    @RequestMapping(value="/editpolicy/{id}",method = RequestMethod.GET)  
+    public String editpolicy(@PathVariable int id,Model m){  
+        Policy p=new Policy();
+        p.setPolicy_id(id);
+        p.setCompany_Id(PolicyDao.getCompanybyid(id));
+        m.addAttribute("command", p);
+        return "policyeditform";  
+    }   
+    @RequestMapping(value="/updatepolicy",method = RequestMethod.POST)  
+    public String update(@ModelAttribute("cust") Policy cust){
+        PolicyDao.update(cust);
+        return "redirect:/admin/viewpolicy";  
+    }
+    @RequestMapping(value="/companypolicies")  
+    public String companypolicies(Model m){
+        List<Company> list=CompanyDao.getCompany();
+        m.addAttribute("list", list);
+        m.addAttribute("command", new Company());
+        return "choosepolicycompany";  
+    }  
+    @RequestMapping(value="/companypoly",method = RequestMethod.POST)  
+    public String save(@ModelAttribute("cust") Company cust,Model m){  
+        List<Policy> list=PolicyDao.getpolicybycompany(cust.getCompany_Id());
+        // int c=dao.getlastcustomer();
+        m.addAttribute("list", list);
+        return "viewpolicybyid";//will redirect to viewemp request mapping  
+    }  
 
 }  

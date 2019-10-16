@@ -11,7 +11,7 @@
 <td>${cust.getCost_per_month()}</td>
 <td>${cust.getThingscover() }</td>
 <td>${cust.getType()}</td>
-<td>${map.get(cust.getCompany_Id)}</td>
+<td>${map.get(cust.getCompany_Id())}</td>
 </tr>
 </c:forEach>
 </table>

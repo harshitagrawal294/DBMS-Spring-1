@@ -10,12 +10,13 @@
 <td>${cust.getName_of_Policy()}</td>
 <td>${cust.getCost_per_month()}</td>
 <td>${cust.getType()}</td>
+<td>${cust.getThingscover()}</td>
 <td>${cust.getCompany_Id()}</td>
-<td><a href="/policy/delete/${cust.getPolicy_id()}">Delete</a></td>
-<td><a href="/policy/edit/${cust.getPolicy_id()}">Edit</a></td>
-<td><a href="/policy/addthingscovered/${cust.getPolicy_id()}">Add things covered</a></td>
+<td><a href="/admin/deletepolicy/${cust.getPolicy_id()}">Delete</a></td>
+<td><a href="/admin/editpolicy/${cust.getPolicy_id()}">Edit</a></td>
+<!-- <td><a href="/policy/addthingscovered/${cust.getPolicy_id()}">Add things covered</a></td> -->
 </tr>
 </c:forEach>
 </table>
 <br/>
-<a href="/policy/policyform">Add New Policy</a>
+<a href="/admin/policyform">Add New Policy</a>

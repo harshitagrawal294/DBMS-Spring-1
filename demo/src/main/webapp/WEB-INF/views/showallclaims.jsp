@@ -23,4 +23,4 @@
 </c:forEach>
 </table>
 <br/>
-<a href="/customer/addclaim">Add new Claim</a>
+<a href="/employee/addclaim">Add new Claim</a>

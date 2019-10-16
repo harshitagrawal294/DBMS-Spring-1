@@ -2,7 +2,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>  
 
 		
-       <form:form method="post" action="/policy/companypoly">  
+       <form:form method="post" action="/admin/companypoly">  
       	<table >  
           <td>Company: </td>  
           <td><form:select path="company_Id">

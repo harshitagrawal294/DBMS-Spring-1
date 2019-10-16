@@ -30,7 +30,7 @@ JdbcTemplate template;
   
  
 public int savenew(Policy p) {
-    String sql="insert into Policy(Name_of_Policy,Cost_per_month,type,Company_Id) values('"+p.getName_of_Policy()+"',"+p.getCost_per_month()+",'"+p.getType()+"','"+p.getCompany_Id()+"')";  
+    String sql="insert into Policy(Name_of_Policy,Cost_per_month,type,Company_Id,things_to_cover) values('"+p.getName_of_Policy()+"',"+p.getCost_per_month()+",'"+p.getType()+"',"+p.getCompany_Id()+",'"+p.getThingscover()+"')";  
     // System.out.print(sql);
     return template.update(sql);  
 }  
@@ -41,12 +41,16 @@ public int delete(int c){
 }  
 public int update(Policy p)
 {
-    String sql="update Policy set Policy_id="+p.getPolicy_id()+",Name_of_Policy='"+p.getName_of_Policy()+"',Cost_per_month="+p.getCost_per_month()+",type='"+p.  getType()+"',Company_Id="+p.getCompany_Id()+" where Policy_id="+p.getPolicy_id()+"";
+    String sql="update Policy set Policy_id="+p.getPolicy_id()+",Name_of_Policy='"+p.getName_of_Policy()+"',Cost_per_month="+p.getCost_per_month()+",type='"+p.getType()+"',Company_Id="+p.getCompany_Id()+",things_to_cover='"+p.getThingscover()+"' where Policy_id="+p.getPolicy_id()+"";
     return template.update(sql);
 }
 public String getnamebyid(int id){
     String sql="select Name_of_Policy from Policy where Policy_id=?";
     return template.queryForObject(sql, new Object[]{id}, String.class);
+}
+public int getCompanybyid(int id){
+    String sql="select Company_Id from Policy where Policy_id=?";
+    return template.queryForObject(sql, new Object[]{id}, Integer.class);
 }
 public List<Policy> getPolicy(){  
     return template.query("select * from Policy",new RowMapper<Policy>(){  
@@ -55,8 +59,9 @@ public List<Policy> getPolicy(){
             e.setPolicy_id(rs.getInt(1));  
             e.setName_of_Policy(rs.getString(2));  
             e.setCost_per_month(rs.getFloat(3));
-            e.setType(rs.getString(4));
-            e.setCompany_Id(rs.getInt(5));
+            e.setThingscover(rs.getString(4));
+            e.setType(rs.getString(5));
+            e.setCompany_Id(rs.getInt(6));
             return e;  
         }  
     });  
@@ -68,8 +73,9 @@ public List<Policy> getpolicybycompany(int id){
             e.setPolicy_id(rs.getInt(1));  
             e.setName_of_Policy(rs.getString(2));  
             e.setCost_per_month(rs.getFloat(3));
-            e.setType(rs.getString(4));
-            e.setCompany_Id(rs.getInt(5));
+            e.setThingscover(rs.getString(4));
+            e.setType(rs.getString(5));
+            e.setCompany_Id(rs.getInt(6));
             return e;  
         }  
     });  
@@ -81,8 +87,9 @@ public List<Policy> getpolicybytype(String type){
             e.setPolicy_id(rs.getInt(1));  
             e.setName_of_Policy(rs.getString(2));  
             e.setCost_per_month(rs.getFloat(3));
-            e.setType(rs.getString(4));
-            e.setCompany_Id(rs.getInt(5));
+            e.setThingscover(rs.getString(4));
+            e.setType(rs.getString(5));
+            e.setCompany_Id(rs.getInt(6));
             return e;  
         }  
     });  

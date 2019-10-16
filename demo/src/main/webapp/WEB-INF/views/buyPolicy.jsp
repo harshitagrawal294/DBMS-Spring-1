@@ -8,7 +8,7 @@
           <td>Policy:</td>  
 
           <td><form:select path="Policy_Id">
-          		<c:forEach var="cust" items="${list}">
+          		<c:forEach var="cust" items="${policies}">
           		<form:option value="${cust.getPolicy_id()}">${cust.getName_of_Policy()}</form:option>
           		</c:forEach>
           	</form:select>

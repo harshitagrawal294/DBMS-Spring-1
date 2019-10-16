@@ -24,7 +24,7 @@ public class Policy  {
 	
 	private String type;
 
-	private String thingscov;
+	private String Thingscover;
 
 	private int Company_Id;
 
@@ -83,11 +83,11 @@ public class Policy  {
 		this.type = type;
 	}
 	public String getThingscover() {
-		return this.thingscov;
+		return this.Thingscover;
 	}
 
 	public void setThingscover(String type) {
-		this.thingscov = type;
+		this.Thingscover = type;
 	}
 
 	public List<Customer_Policy> getCustomerPolicies() {

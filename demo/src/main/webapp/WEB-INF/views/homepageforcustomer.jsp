@@ -5,7 +5,7 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-    <h1>Hello ${customer.getName()}!!</h1>
+    <h1>Hello ${customer.getName()}!! buy policy check wallet balance</h1>
     <a href="/customer/myinfo">My Info</a><br>
     <a href="/customer/policies/vehicle">Policies</a><br>
     <a href="/customer/mypolicies">My Policies</a><br>
