@@ -47,10 +47,10 @@ public List<Asset> getassetsbypolicy(int id){
         public Asset mapRow(ResultSet rs, int row) throws SQLException {  
         	Asset e=new Asset();  
             e.setAssetid(rs.getInt(1));  
-            e.setPolicynumber(rs.getInt(2));  
+            // e.setPolicynumber(rs.getInt(2));  
             e.setCustomerid(rs.getInt(3));
-            e.setDetails(rs.getString(4));
-            e.setType(rs.getString(5));
+            e.setDetails(rs.getString(2));
+            e.setType(rs.getString(4));
             return e;  
         }  
     });  
@@ -62,10 +62,10 @@ public List<Asset> getassetsbycustomer(int id){
         public Asset mapRow(ResultSet rs, int row) throws SQLException {  
         	Asset e=new Asset();  
             e.setAssetid(rs.getInt(1));  
-            e.setPolicynumber(rs.getInt(2));  
+            // e.setPolicynumber(rs.getInt(2));  
             e.setCustomerid(rs.getInt(3));
-            e.setDetails(rs.getString(4));
-            e.setType(rs.getString(5));
+            e.setDetails(rs.getString(2));
+            e.setType(rs.getString(4));
             return e;  
         }  
     });  

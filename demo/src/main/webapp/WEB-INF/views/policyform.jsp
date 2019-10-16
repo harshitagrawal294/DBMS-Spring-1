@@ -14,7 +14,11 @@
          </tr>
         <tr>  
             <td>type :</td>  
-            <td><form:input path="type" maxlength="20"/></td>
+            <td><form:select path="type" >
+                <form:option value="health">Health Policy</form:option>
+                <form:option value="property">Property Policy</form:option>
+                <form:option value="vehicle">Vehicle Policy</form:option>
+            </form:select></td>
         </tr>
        
         <tr>  

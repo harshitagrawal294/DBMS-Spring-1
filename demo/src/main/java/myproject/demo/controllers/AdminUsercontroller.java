@@ -52,6 +52,7 @@ import myproject.demo.models.Employee_type;
 import myproject.demo.models.Feedback;
 import myproject.demo.models.Office;
 import myproject.demo.models.Policy;
+import myproject.demo.models.Transaction;
 // import myproject.demo.models.User;
 // import myproject.demo.models.Wallet;
 import myproject.demo.models.User;
@@ -191,7 +192,9 @@ public class AdminUsercontroller {
     }  
     @RequestMapping(value="/deleteemptype/{id}",method = RequestMethod.GET)  
     public String deleteemptype(@PathVariable int id){  
+        
         Employee_typeDao.delete(id);  
+        // Userdao.delete(username);
         return "redirect:/admin/viewemptype";  
     }   
     @RequestMapping(value="/updateemptype/{id}",method = RequestMethod.GET)  
@@ -254,8 +257,9 @@ public class AdminUsercontroller {
     } 
     @RequestMapping(value="/deleteemployee/{id}",method = RequestMethod.GET)  
     public String deleteemployee(@PathVariable int id){  
-        
+        String username=(EmployeeDao.getEmployeeById(id)).getUsername();
         EmployeeDao.delete(id);  
+        Userdao.delete(username);
         return "redirect:/admin/viewemployee";  
     }   
     @RequestMapping(value="/editemployee/{id}",method = RequestMethod.GET)  
@@ -289,7 +293,9 @@ public class AdminUsercontroller {
     }
     @RequestMapping(value="/deletecustomer/{id}",method=RequestMethod.GET)  
     public String delete(Model m,@PathVariable int id){ 
+    String username=(customerdao.getCustomerById(id)).getUsername();
     customerdao.delete(id); 
+    Userdao.delete(username);
         return "redirect:/admin";
     }
     @RequestMapping("/feedback")
@@ -376,5 +382,59 @@ public class AdminUsercontroller {
         m.addAttribute("list", list);
         return "viewpolicybyid";//will redirect to viewemp request mapping  
     }  
+    @RequestMapping("/showtransactions/pending")
+    public String viewtransactions(Model m)
+    {
+        final Map<Integer,String> map=new HashMap<Integer,String>();
+    	List<Transaction> list=template.query("select money,status,t.Customer_Id,transactionid,Name from transaction as t,Customer as c where t.status=0 and t.Customer_Id=c.Customer_Id",new ResultSetExtractor<List<Transaction> >(){  
+	        public List<Transaction> extractData(ResultSet rs) throws SQLException,DataAccessException {  
+	        	List<Transaction> list = new ArrayList<Transaction>();  
+	            while(rs.next()){  
+                    Transaction bt = new Transaction();
+	               bt.setMoney(rs.getFloat("money"));
+	               bt.setStatus(rs.getInt("status"));
+                   bt.setCustomer_Id(rs.getInt("Customer_Id"));
+                   bt.setTransactionid(rs.getInt("transactionid"));
+	               map.put(rs.getInt("transactionid"),rs.getString("Name"));
+	               list.add(bt);  
+	            }  
+	            return list;
+	        }  
+        });  
+       
+        m.addAttribute("list",list);
+        m.addAttribute("map", map);
+        // m.addAttribute("e", e);
+        return "allpendingtransaction";
+    }
+    @RequestMapping("/showtransactions/complete")
+    public String allcompletetransactions(Model m)
+    {
+        final Map<Integer,String> map=new HashMap<Integer,String>();
+        final Map<Integer,String> emap=new HashMap<Integer,String>();
+    	List<Transaction> list=template.query("select money,status,t.Customer_Id,transactionid,c.Name,e.Name as eName,t.User_Id from Employee as e,transaction as t,Customer as c where t.status=1 and t.Customer_Id=c.Customer_Id and e.User_Id=t.User_Id",new ResultSetExtractor<List<Transaction> >(){  
+	        public List<Transaction> extractData(ResultSet rs) throws SQLException,DataAccessException {  
+	        	List<Transaction> list = new ArrayList<Transaction>();  
+	            while(rs.next()){  
+                    Transaction bt = new Transaction();
+	               bt.setMoney(rs.getFloat("money"));
+	               bt.setStatus(rs.getInt("status"));
+                   bt.setCustomer_Id(rs.getInt("Customer_Id"));
+                   bt.setTransactionid(rs.getInt("transactionid"));
+                   bt.setUser_Id(rs.getInt("User_Id"));
+                   map.put(rs.getInt("transactionid"),rs.getString("Name"));
+                   emap.put(rs.getInt("transactionid"),rs.getString("eName"));
+	               list.add(bt);  
+	            }  
+	            return list;
+	        }  
+        });  
+       
+        m.addAttribute("list",list);
+        m.addAttribute("map", map);
+        m.addAttribute("emap", emap);
+        // m.addAttribute("e", e);
+        return "allcompletetransactions";
+    }
 
 }  

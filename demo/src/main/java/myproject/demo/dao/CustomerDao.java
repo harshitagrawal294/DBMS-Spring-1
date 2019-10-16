@@ -83,6 +83,7 @@ public List<Customer> getCustomer(){
             e.setStreet(rs.getString(3));
             e.setCountry(rs.getString(4));
             e.setPincode(rs.getString(5));
+            e.setUsername(rs.getString(6));
             return e;  
         }  
     });  
