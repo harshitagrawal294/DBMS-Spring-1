@@ -400,7 +400,7 @@ public class EmployeeUserController {
         return "redirect:/employee/ehomepage";
     }
 
-    @RequestMapping("/claim/{claim_id}/delete")
+    @RequestMapping("/deleteclaim/{claim_id}")
     public String deleteClaim(@PathVariable int claim_id){
         claimDetailDao.delete(claim_id);
         return "redirect:/employee";
