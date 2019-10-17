@@ -8,22 +8,22 @@
         <link rel="stylesheet" href="/css/main.css" type="text/css">
 </head>
 <body>
-    <div class="container ft-rs">
-<h1>Employee Info</h1>
+    <div class="container blk ft-rs">
+    <h1 class="ft-rw">Employee Info</h1>
 
-<p>User name= ${cust.getUsername() }</p>
-<p>Name= ${cust.getName()}</p>
-<p>Date of Joining= ${cust.getDate_of_joining()}</p>
-<p>Contact= ${cust.getContact_Information()}</p>
-<p>Gender= ${cust.getGender()}</p>
-<p>Street= ${cust.getStreet()}</p>
-<p>Pincode= ${cust.getPincode()}</p>
-<p>Country= ${cust.getCountry()}</p>
-<p>Employee type= ${etype}</p>
-<p>Office= ${office}</p>
+    <p>User name= ${cust.getUsername() }</p>
+    <p>Name= ${cust.getName()}</p>
+    <p>Date of Joining= ${cust.getDate_of_joining()}</p>
+    <p>Contact= ${cust.getContact_Information()}</p>
+    <p>Gender= ${cust.getGender()}</p>
+    <p>Street= ${cust.getStreet()}</p>
+    <p>Pincode= ${cust.getPincode()}</p>
+    <p>Country= ${cust.getCountry()}</p>
+    <p>Employee type= ${etype}</p>
+    <p>Office= ${office}</p>
 
 <br/>
-<!-- <a href="/customer/customerform">Add New Customer</a> -->
+<!-- <a class="detail-button" href="/customer/customerform">Add New Customer</a> -->
 
 </div>
 

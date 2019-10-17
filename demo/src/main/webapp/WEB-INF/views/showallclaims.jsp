@@ -9,9 +9,9 @@
 </head>
 <body>
     <div class="container ft-rs">
-<h1>Claim List</h1>
-<table border="2" width="70%" cellpadding="2">
-<tr><th>Asset</th><th>Damage</th><th>Date</th><th>Policy name</th><th>Offered by</th><th>Status</th><th>Customer name</th><th>Edit Status</th><th>Delete Claim</th></tr>
+<h1 class="ft-rw">Claim List</h1>
+<table>
+<tr class="table-head"><th>Asset</th><th>Damage</th><th>Date</th><th>Policy name</th><th>Offered by</th><th>Status</th><th>Customer name</th><th>Edit Status</th><th>Delete Claim</th></tr>
 <c:forEach var="doc" items="${list}"> 
 <tr>
 
@@ -33,7 +33,7 @@
 </c:forEach>
 </table>
 <br/>
-<a href="/employee/claim/add">Add new Claim</a>
+<a class="detail-button" href="/employee/claim/add">Add new Claim</a>
 
 </div>
 

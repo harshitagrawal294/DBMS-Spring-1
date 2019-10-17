@@ -88,8 +88,8 @@ public List<Asset> getSecuredAssetByCustomer(int c_id){
 }
 
 public List<Asset> getUnsecuredAssetByCustomer(int c_id){
-    String query = "select * from Assets where Asset_Id NOT IN  (select Asset_Id from Customer_Policies where date_of_expire>curdate() and Customer_Id=?)";
-    return template.query(query, new Object[]{c_id}, new RowMapper<Asset>() {
+    String query = "select * from Assets where Asset_ID NOT IN  (select Asset_Id from Customer_Policies where date_of_expire>curdate() and Customer_Id=?) and Customer_Id=?";
+    return template.query(query, new Object[]{c_id,c_id}, new RowMapper<Asset>() {
         @Override
         public Asset mapRow(ResultSet rs, int i) throws SQLException {
             Asset e=new Asset();

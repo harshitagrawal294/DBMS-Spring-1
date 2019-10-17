@@ -9,9 +9,9 @@
 </head>
 <body>
     <div class="container ft-rs">
-<h1>Feedback</h1>
-<table border="2" width="70%" cellpadding="2">
-<tr><th>Remarks</th><th>Wriitenby</th><th>Delete</th><th>Edit</th></tr>
+<h1 class="ft-rw">Feedback</h1>
+<table>
+<tr class="table-head"><th>Remarks</th><th>Wriitenby</th><th>Delete</th><th>Edit</th></tr>
 <c:forEach var="doc" items="${list}"> 
 <tr>
 
@@ -25,7 +25,7 @@
 </c:forEach>
 </table>
 <br/>
-<a href="/employee/addfeedback">Add New Feedback</a>
+<a class="detail-button-lg" href="/employee/addfeedback">Add New Feedback</a>
 
 </div>
 

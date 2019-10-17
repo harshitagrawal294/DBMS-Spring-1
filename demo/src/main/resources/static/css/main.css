@@ -80,6 +80,15 @@ body {
     text-align: justify;
 }
 
+.blk > p {
+    width: 60%;
+    margin: auto;
+    background-color: #e6e6e6;
+    color: #636363;
+    margin-top: 5px;
+    margin-bottom: 5px;
+    padding: 5px 0;
+}
 /* ----------------------- Table Section --------------------------------- */
 
 table {
@@ -132,11 +141,14 @@ td {
 .detail-button-lg {
     display: inline-block;
     height : 40px;
-    width : 120px;
+    width : 160px;
     background-color: #36304a;
     border-radius: 5px;
     padding-top: 8px;
     margin: 10px 20px;
+        font-family: 'Raleway', sans-serif;
+        color: white;
+        text-decoration: none;
 }
 
 /* ----------------------- Nav Section --------------------------------- */

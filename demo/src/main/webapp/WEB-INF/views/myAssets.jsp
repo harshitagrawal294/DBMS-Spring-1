@@ -44,8 +44,12 @@
 </c:forEach>
 </table>
 <br/>
+<<<<<<< Updated upstream
 <a class="detail-button" href="/customer/asset/add">Add Asset</a>
 <a class="detail-button" href=/customer>Home Page</a>
+=======
+<a  class="detail-button" href="/customer/asset/add">Add Asset</a>
+>>>>>>> Stashed changes
 
 
 </div>
