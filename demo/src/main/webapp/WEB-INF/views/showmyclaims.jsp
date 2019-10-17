@@ -9,9 +9,9 @@
 </head>
 <body>
     <div class="container ft-rs">
-<h1>Your Claim List</h1>
+<h1 class="ft-rw">Your Claim List</h1>
 <table border="2" width="70%" cellpadding="2">
-<tr><th>Asset</th><th>Damage</th><th>Date</th><th>Policy name</th><th>Offered by</th><th>Status</th></tr>
+<tr class="table-head"><th>Asset</th><th>Damage</th><th>Date</th><th>Policy name</th><th>Offered by</th><th>Status</th></tr>
 <c:forEach var="doc" items="${list}"> 
 <tr>
 
@@ -32,7 +32,7 @@
 </table>
 <br/>
 
-
+<a class="detail-button" href=/customer>Home Page</a>
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>

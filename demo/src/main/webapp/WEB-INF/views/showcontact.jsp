@@ -21,7 +21,8 @@
 </c:forEach>
 </table>
 <br/>
-<a href="/customer/addcontact">Add New Contact</a>
+<a href="/customer/addcontact">Add New Contact</a><br>
+<a href="/customer/myinfo">Info Page</a>
 
 
 </div>

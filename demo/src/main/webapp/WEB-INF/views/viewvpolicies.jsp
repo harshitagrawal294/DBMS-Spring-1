@@ -10,9 +10,9 @@
         </head>
         <body>
             <div class="container ft-rs">
-                    <h1>${t} Policies (Add Company name who offered it)</h1>
+                    <h1 class="ft-rw"> ${t} Policies (Add Company name who offered it)</h1>
 <table border="2" width="70%" cellpadding="2">
-<tr><th>Id</th><th>Name</th><th>Cost</th><th>Things covered</th><th>Type</th><th>Company id</th></tr>
+<tr  class="table-head"><th>Id</th><th>Name</th><th>Cost</th><th>Things covered</th><th>Type</th><th>Company id</th></tr>
 <c:forEach var="cust" items="${list}"> 
 <tr>
 <td>${cust.getPolicy_id()}</td>
@@ -28,6 +28,7 @@
 <a class="detail-button" href=/customer/policies/vehicle>Vehicle</a>
 <a class="detail-button" href=/customer/policies/property>Property</a>
 <a class="detail-button" href=/customer/policies/health>Health</a>
+<a class="detail-button" href=/customer>Home Page</a>
 <!-- <a href="/policy/policyform">Add New Policy</a> -->
 
 

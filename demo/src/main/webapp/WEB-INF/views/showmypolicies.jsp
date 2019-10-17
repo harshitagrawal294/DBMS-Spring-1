@@ -9,9 +9,9 @@
 </head>
 <body>
     <div class="container ft-rs">
-<h1>Your Active Policy List</h1>
+<h1  class="ft-rw">Your Active Policy List</h1>
 <table border="2" width="70%" cellpadding="2">
-<tr><th>Asset</th><th>Date of Expire</th><th>Date of Purchase</th><th>Policy name</th><th>Offered by</th><th>Status</th></tr>
+<tr  class="table-head"><th>Asset</th><th>Date of Expire</th><th>Date of Purchase</th><th>Policy name</th><th>Offered by</th><th>Status</th></tr>
 <c:forEach var="doc" items="${list}"> 
 <tr>
 
@@ -20,13 +20,13 @@
 <td>${doc.getDate_of_Purchase()}</td>
 <td>${policymap.get(doc.getPolicy_Number())}</td>
 <td>${companymap.get(doc.getPolicy_Number())}</td>
-<td><a href="/customer/linkdocs/${doc.getPolicy_Number()}">Link Documents </a></td>
+<td><a  href="/customer/linkdocs/${doc.getPolicy_Number()}">Link Documents </a></td>
 
 </tr>
 </c:forEach>
 </table>
 <br/>
-
+<a class="detail-button" href=/customer>Home Page</a>
 </div>
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>

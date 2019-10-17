@@ -9,8 +9,8 @@
         <link rel="stylesheet" href="/css/main.css" type="text/css">
 </head>
 <body>
-    <div class="container ft-rs">		<h1>Add Balance</h1>
-       <form:form method="post" action="/customer/updatebalance">  
+    <div class="container ft-rs">		<h1 class="ft-rw">Add Balance</h1>
+       <form:form class="wrapper-form" method="post" action="/customer/updatebalance">  
       	<table >  
          <tr>  
           <!-- <td>Customer_ID : </td>  -->

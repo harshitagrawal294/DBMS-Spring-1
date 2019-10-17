@@ -16,22 +16,22 @@
     <th>Secured Asset id</th>
     <th>details</th>
     <th>Type</th>
-    <th>Policy name</th>
-    <th>Offered by</th>
-    <th>Status</th
-></tr>
+    <th>Discontinue</th>
+    <th>Delete</th>
+    </tr>
 <c:forEach var="row" items="${secured_assets}">
 <tr>
     <td>${row.getAssetid()}</td>
     <td>${row.getDetails()}</td>
     <td>${row.getType()}</td>
     <td><a href="/customer/asset/${row.getAssetid()}/policy/discontinue">Dicontinue the policy</a></td>
+    <td><a href="/customer/asset/${row.getAssetid()}/delete">Delete asset</a></td>
 </tr>
 </c:forEach>
 </table>
 
 <table>
-<tr class="table-head"><th>Unsecured Asset</th><th>Date of Expire</th><th>Date of Purchase</th><th>Policy name</th><th>Offered by</th><th>Status</th></tr>
+<tr class="table-head"><th>Unsecured Asset</th><th>Date of Expire</th><th>Date of Purchase</th><th>Buy Policy</th><th>Delete</th></tr>
 <c:forEach var="row" items="${unsecured_assets}">
 <tr>
 
@@ -39,11 +39,13 @@
 <td>${row.getDetails()}</td>
 <td>${row.getType()}</td>
 <td><a href="/customer/asset/${row.getAssetid()}/policy/buy">Buy Policy for this asset</a></td>
+<td><a href="/customer/asset/${row.getAssetid()}/delete">Delete asset</a></td>
 </tr>
 </c:forEach>
 </table>
 <br/>
-<span class="detail-button"><a href="/customer/asset/add">Add Asset</a></span>
+<a class="detail-button" href="/customer/asset/add">Add Asset</a>
+<a class="detail-button" href=/customer>Home Page</a>
 
 
 </div>

@@ -9,17 +9,18 @@
 </head>
 <body>
     <div class="container ft-rs">
-		<h1>Add New Customer</h1>
+		<h1 class="ft-rw">Add New Customer</h1>
        <form:form method="post" action="/customer/save">  
       	<table >  
          <tr>  
           <td>Name : </td> 
           <td><form:input path="name" maxlength="50" required="true"/></td>
+          <!-- <td>Us : </td>  -->
+          <td><form:hidden path="username"  /></td>
          </tr>  
-         <tr>  
-            <!-- <td>Us : </td>  -->
-            <td><form:hidden path="username"  /></td>
-           </tr>  
+           
+            
+            
         <tr>  
             <td>Country :</td>  
             <td><form:input path="country" maxlength="20" required="true"/></td>

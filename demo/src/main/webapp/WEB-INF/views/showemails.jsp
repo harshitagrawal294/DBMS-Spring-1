@@ -22,7 +22,8 @@
 </c:forEach>
 </table>
 <br/>
-<a href="/customer/addemails">Add New Email</a>
+<a href="/customer/addemails">Add New Email</a><br>
+<a href="/customer/myinfo">Info Page</a>
 
 
 </div>
